@@ -4,13 +4,13 @@ import {
     AccordionSummary,
     Box,
     Button,
-    createMuiTheme, createTheme, CssBaseline,
+    createTheme, CssBaseline,
     ThemeProvider,
     Typography,
     useMediaQuery
 } from '@mui/material';
-import React, {useMemo} from 'react';
-import TestFunction from "./TestScript";
+import React from 'react';
+import ColourSelector from "./ColourSelector";
 
 
 
@@ -80,8 +80,7 @@ function App() {
                   <Typography fontSize={18} fontWeight={"semi bold"} >Colour picker</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                  <Box sx={{ m: '2rem' }} />
-                  <Button variant="contained">Random Colour</Button>
+                  <ColourSelector></ColourSelector>
               </AccordionDetails>
           </Accordion>
           <Accordion expanded={expanded === 'jsonTools'} onChange={handleChange('jsonTools')}>
