@@ -11,8 +11,8 @@ import {
 } from '@mui/material';
 import React from 'react';
 import ColourSelector from "./ColourSelector";
-
-
+import { browser } from "webextension-polyfill-ts";
+import Bolt from "./Bolt";
 
 
 function App() {
@@ -71,7 +71,6 @@ function App() {
         (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
             setExpanded(newExpanded ? panel : false);
         };
-
   return (
       <ThemeProvider theme={darkTheme}>
       <CssBaseline />
@@ -81,6 +80,14 @@ function App() {
               </AccordionSummary>
               <AccordionDetails>
                   <ColourSelector></ColourSelector>
+              </AccordionDetails>
+          </Accordion>
+          <Accordion expanded={expanded === 'Bolt'} onChange={handleChange('Bolt')}>
+              <AccordionSummary aria-controls="Bolt-content" id="Bolt-header">
+                  <Typography fontSize={18} fontWeight={"semi bold"} >Bolt</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                    <Bolt></Bolt>
               </AccordionDetails>
           </Accordion>
           <Accordion expanded={expanded === 'jsonTools'} onChange={handleChange('jsonTools')}>

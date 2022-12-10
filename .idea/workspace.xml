@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b9e7239-1912-4b06-b7d4-c19c9b5ac9ed" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/ColourSelector.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Bolt.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
@@ -20,6 +20,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="TypeScript JSX File" />
+        <option value="JavaScript File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -56,6 +58,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\skage\OneDrive\Desktop\qatoolkits\src" />
       <recent name="C:\Users\skage\OneDrive\Desktop\qatoolkits\public" />
     </key>
   </component>
@@ -70,7 +73,7 @@
       <workItem from="1670669109396" duration="9000" />
       <workItem from="1670669387848" duration="1110000" />
       <workItem from="1670670777342" duration="1682000" />
-      <workItem from="1670672877336" duration="4479000" />
+      <workItem from="1670672877336" duration="10928000" />
     </task>
     <servers />
   </component>
