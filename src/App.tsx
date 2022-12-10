@@ -1,11 +1,70 @@
-import {Accordion, AccordionDetails, AccordionSummary, Box, Button, Typography} from '@mui/material';
-import React from 'react';
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Box,
+    Button,
+    createMuiTheme, createTheme, CssBaseline,
+    ThemeProvider,
+    Typography,
+    useMediaQuery
+} from '@mui/material';
+import React, {useMemo} from 'react';
 import TestFunction from "./TestScript";
 
 
 
 
 function App() {
+    const darkTheme = createTheme({
+        palette: {
+            mode: 'dark',
+            primary: {
+                main: '#dcdc27',
+            },
+            background: {
+                default: '#111111',
+                paper: '#212121',
+            },
+            text: {
+                primary: '#ff1744',
+            },
+        },
+        typography: {
+            fontFamily: 'Open Sans',
+            h1: {
+                fontFamily: 'Ubuntu Mono',
+            },
+            h2: {
+                fontFamily: 'Ubuntu Mono',
+            },
+            h3: {
+                fontFamily: 'Ubuntu Mono',
+            },
+            h4: {
+                fontFamily: 'Ubuntu Mono',
+            },
+            h6: {
+                fontFamily: 'Ubuntu Mono',
+            },
+            h5: {
+                fontFamily: 'Ubuntu Mono',
+            },
+            subtitle1: {
+                fontFamily: 'Ubuntu Mono',
+            },
+            subtitle2: {
+                fontFamily: 'Ubuntu Mono',
+            },
+            button: {
+                fontFamily: 'Ubuntu Mono',
+                fontWeight: 900,
+            },
+            overline: {
+                fontFamily: 'Ubuntu Mono',
+            },
+        },
+    });
 
     const [expanded, setExpanded] = React.useState<string | false>('panel1');
     const handleChange =
@@ -14,10 +73,11 @@ function App() {
         };
 
   return (
-      <div>
+      <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
           <Accordion expanded={expanded === 'colourPicker'} onChange={handleChange('colourPicker')}>
               <AccordionSummary aria-controls="colourPicker-content" id="colourPicker-header">
-                  <Typography>Colour picker</Typography>
+                  <Typography fontSize={18} fontWeight={"semi bold"} >Colour picker</Typography>
               </AccordionSummary>
               <AccordionDetails>
                   <Box sx={{ m: '2rem' }} />
@@ -26,7 +86,7 @@ function App() {
           </Accordion>
           <Accordion expanded={expanded === 'jsonTools'} onChange={handleChange('jsonTools')}>
               <AccordionSummary aria-controls="jsonTools-content" id="jsonTools-header">
-                  <Typography>Json Tools</Typography>
+                  <Typography fontSize={18} fontWeight={"semi bold"} >Json Tools</Typography>
               </AccordionSummary>
               <AccordionDetails>
                   <Typography>
@@ -36,7 +96,7 @@ function App() {
           </Accordion>
           <Accordion expanded={expanded === '3dTours'} onChange={handleChange('3dTours')}>
               <AccordionSummary aria-controls="3dTours-content" id="3dTours-header">
-                  <Typography>3D Tours</Typography>
+                  <Typography fontSize={18} fontWeight={"semi bold"} >3D Tours</Typography>
               </AccordionSummary>
               <AccordionDetails>
                   <Typography>
@@ -44,7 +104,7 @@ function App() {
                   </Typography>
               </AccordionDetails>
           </Accordion>
-      </div>
+      </ThemeProvider>
 
   );
 }
