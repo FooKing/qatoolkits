@@ -1,7 +1,8 @@
-import {Box, FormControl, InputLabel, Menu, MenuItem, Select, Tab, Tabs, Typography} from "@mui/material";
+import {Box, Button, FormControl, InputLabel, Menu, MenuItem, Select, Tab, Tabs, Typography} from "@mui/material";
 import React, {useEffect, useRef} from "react";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import {isVisible} from "@testing-library/user-event/dist/utils";
+import {browser} from "webextension-polyfill-ts";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -36,9 +37,15 @@ function a11yProps(index: number) {
     };
 }
 
+function TestConsoleButton() {
+    console.log("ButtonPressed")
+    browser.tabs.executeScript({
+        code: 'alert("hello");'
+    }).then(r => console.log("CompletedRequest") );
+}
+
 function VerticalTabs() {
     const [value, setValue] = React.useState(0);
-
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
@@ -46,6 +53,7 @@ function VerticalTabs() {
     return (
         <Box
             sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224 }}
+
         >
             <Tabs
                 orientation="vertical"
@@ -64,7 +72,7 @@ function VerticalTabs() {
                 <Tab label="Item Seven" {...a11yProps(6)} />
             </Tabs>
             <TabPanel value={value} index={0}>
-                <Select></Select>
+                <Button onClick={TestConsoleButton} > This is my Button</Button>
             </TabPanel>
             <TabPanel value={value} index={1}>
                 Item Two
