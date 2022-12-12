@@ -1,49 +1,90 @@
-import {FormControl, InputLabel, Menu, MenuItem, Select} from "@mui/material";
-import React from "react";
+import {Box, FormControl, InputLabel, Menu, MenuItem, Select, Tab, Tabs, Typography} from "@mui/material";
+import React, {useEffect, useRef} from "react";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import classes from "*.module.css";
+import {isVisible} from "@testing-library/user-event/dist/utils";
 
+interface TabPanelProps {
+    children?: React.ReactNode;
+    index: number;
+    value: number;
+}
 
-const projectCount = 9;
-const wren = "wrenkitchens"
-function Bolt() {
-    function handleChange() {
+function TabPanel(props: TabPanelProps) {
+    const { children, value, index, ...other } = props;
 
-    }
-
-    let service;
     return (
-        <div>
-                <InputLabel id="demo-simple-select-label">Service</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={service}
-                    label="Service"
-                    onChange={handleChange}
-                    fullWidth={true}
-                    >
-                <MenuItem value={'Frontend'}>Frontend</MenuItem>
-                <MenuItem value={'Jenkins'}>Jenkins</MenuItem>
-                <MenuItem value={'Jira'}>Jira</MenuItem>
-                <MenuItem value={'Rundeck'}>Rundeck</MenuItem>
-            </Select>
-            <Grid2  className={classes.Frontend} id={'FrontendContent'}  container spacing={2} sx={{ visibility: 'hidden' }}>
-                <Grid2 xs={8}>
-                    <div>xs=8</div>
-                </Grid2>
-                <Grid2 xs={4}>
-                    <div>xs=4</div>
-                </Grid2>
-                <Grid2 xs={4}>
-                    <div>xs=4</div>
-                </Grid2>
-                <Grid2 xs={8}>
-                    <div>xs=8</div>
-                </Grid2>
-            </Grid2>
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`vertical-tabpanel-${index}`}
+            aria-labelledby={`vertical-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p: 3 }}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
         </div>
     );
 }
 
-export default Bolt;
+function a11yProps(index: number) {
+    return {
+        id: `vertical-tab-${index}`,
+        'aria-controls': `vertical-tabpanel-${index}`,
+    };
+}
+
+function VerticalTabs() {
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+        setValue(newValue);
+    };
+
+    return (
+        <Box
+            sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224 }}
+        >
+            <Tabs
+                orientation="vertical"
+                variant="scrollable"
+                value={value}
+                onChange={handleChange}
+                aria-label="Vertical tabs example"
+                sx={{ borderRight: 1, borderColor: 'divider' }}
+            >
+                <Tab label="Frontend" {...a11yProps(0)} />
+                <Tab label="Jenkins" {...a11yProps(1)} />
+                <Tab label="Rundeck" {...a11yProps(2)} />
+                <Tab label="Item Four" {...a11yProps(3)} />
+                <Tab label="Item Five" {...a11yProps(4)} />
+                <Tab label="Item Six" {...a11yProps(5)} />
+                <Tab label="Item Seven" {...a11yProps(6)} />
+            </Tabs>
+            <TabPanel value={value} index={0}>
+                <Select></Select>
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+                Item Two
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+                Item Three
+            </TabPanel>
+            <TabPanel value={value} index={3}>
+                Item Four
+            </TabPanel>
+            <TabPanel value={value} index={4}>
+                Item Five
+            </TabPanel>
+            <TabPanel value={value} index={5}>
+                Item Six
+            </TabPanel>
+            <TabPanel value={value} index={6}>
+                Item Seven
+            </TabPanel>
+        </Box>
+    );
+}
+export default VerticalTabs;
