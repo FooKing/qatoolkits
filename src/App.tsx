@@ -13,6 +13,7 @@ import React from 'react';
 import ColourSelector from "./ColourSelector";
 import { browser } from "webextension-polyfill-ts";
 import Bolt from "./Bolt";
+import ConsoleCommands from "./ConsoleCommands";
 
 
 function App() {
@@ -100,13 +101,13 @@ function App() {
                   </Typography>
               </AccordionDetails>
           </Accordion>
-          <Accordion expanded={expanded === '3dTours'} onChange={handleChange('3dTours')}>
-              <AccordionSummary aria-controls="3dTours-content" id="3dTours-header">
-                  <Typography fontSize={18} fontWeight={"semi bold"} >3D Tours</Typography>
+          <Accordion expanded={expanded === 'ConsoleCommands'} onChange={handleChange('ConsoleCommands')}>
+              <AccordionSummary aria-controls="ConsoleCommands-content" id="ConsoleCommands-header">
+                  <Typography fontSize={18} fontWeight={"semi bold"} >Debug Commands</Typography>
               </AccordionSummary>
               <AccordionDetails>
                   <Typography>
-                      3D tours here.
+                      <ConsoleCommands></ConsoleCommands>
                   </Typography>
               </AccordionDetails>
           </Accordion>
