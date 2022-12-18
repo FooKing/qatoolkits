@@ -1,8 +1,8 @@
-import {Box, Button, FormControl, InputLabel, Menu, MenuItem, Select, Tab, Tabs, Typography} from "@mui/material";
-import React, {useEffect, useRef} from "react";
-import Grid2 from "@mui/material/Unstable_Grid2";
-import {isVisible} from "@testing-library/user-event/dist/utils";
+import {Box, Button, Input, MenuItem, Select, SelectChangeEvent, Tab, Tabs, Typography} from "@mui/material";
+import React, {useState} from "react";
 import {browser} from "webextension-polyfill-ts";
+
+
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -39,28 +39,41 @@ function a11yProps(index: number) {
 
 function TestConsoleButton() {
     console.log("ButtonPressed")
+    window.open(("Https://www.frontend.wrenkitchens.com"))
     browser.tabs.executeScript({
         code: 'alert("hello");'
     }).then(r => console.log("CompletedRequest") );
 }
 
-function VerticalTabs() {
+function Bolt() {
     const [value, setValue] = React.useState(0);
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
+    const handleSelectChange = (event: SelectChangeEvent<string>, child: React.ReactNode) => {
+
+    };
+    const [project, setProject] = useState('');
+    const environmentArray = [
+        "Live",
+        "Project0",
+        "Project1",
+        "Project2",
+        "Project3",
+        "Project4",
+        "Project5",
+        "Project6",
+        "Project7",
+        "Project8",
+    ];
 
     return (
-        <Box
-            sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224 }}
-
-        >
+        <Box sx={{ flexGrow: 1, display: 'flex', height: 224, borderRadius:1, border:1, padding:"5px"}}>
             <Tabs
                 orientation="vertical"
                 variant="scrollable"
                 value={value}
                 onChange={handleChange}
-                aria-label="Vertical tabs example"
                 sx={{ borderRight: 1, borderColor: 'divider' }}
             >
                 <Tab label="Frontend" {...a11yProps(0)} />
@@ -72,7 +85,15 @@ function VerticalTabs() {
                 <Tab label="Item Seven" {...a11yProps(6)} />
             </Tabs>
             <TabPanel value={value} index={0}>
-                <Button onClick={TestConsoleButton} > This is my Button</Button>
+                <Box >
+                   <label>Env: </label>
+                    <Select size="small" id="projectSelect" sx={{width:100}} onChange={handleSelectChange}>
+                        {environmentArray.map((environmentValue) => {
+                            return <MenuItem value={environmentValue}>{environmentValue}</MenuItem>
+                        })}
+                    </Select>
+                <Button onClick={TestConsoleButton} > Go </Button>
+                </Box>
             </TabPanel>
             <TabPanel value={value} index={1}>
                 Item Two
@@ -95,4 +116,4 @@ function VerticalTabs() {
         </Box>
     );
 }
-export default VerticalTabs;
+export default Bolt;
