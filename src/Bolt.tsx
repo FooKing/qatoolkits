@@ -99,14 +99,10 @@ function Bolt() {
                 <Tab label="Frontend" {...populateTabs(0)} />
                 <Tab label="Jenkins" {...populateTabs(1)} />
                 <Tab label="Rundeck" {...populateTabs(2)} />
-                <Tab label="Item Four" {...populateTabs(3)} />
-                <Tab label="Item Five" {...populateTabs(4)} />
-                <Tab label="Item Six" {...populateTabs(5)} />
-                <Tab label="Item Seven" {...populateTabs(6)} />
             </Tabs>
             <TabPanel value={value} index={0}>
                 <Box >
-                   <FormControl sx={{ m: 1, width:90 }} variant="outlined">
+                   <FormControl sx={{ m: 1, width:90 }} variant="standard">
                        <InputLabel>Environment</InputLabel>
                         <Select size="small" id="projectSelect" onChange={handleEnvironmentChange}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
@@ -115,7 +111,7 @@ function Bolt() {
                             })}
                         </Select>
                    </FormControl >
-                    <FormControl sx={{ m: 1, width:90 }} variant="outlined">
+                    <FormControl sx={{ m: 1, width:90 }} variant="standard">
                         <InputLabel>Region</InputLabel>
                         <Select size="small" id="regionSelect" onChange={handleRegionChange}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
@@ -128,22 +124,10 @@ function Bolt() {
                 </Box>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Item Two
+                Jenkins
             </TabPanel>
             <TabPanel value={value} index={2}>
-                Item Three
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-                Item Four
-            </TabPanel>
-            <TabPanel value={value} index={4}>
-                Item Five
-            </TabPanel>
-            <TabPanel value={value} index={5}>
-                Item Six
-            </TabPanel>
-            <TabPanel value={value} index={6}>
-                Item Seven
+                Rundecks
             </TabPanel>
         </Box>
     );
