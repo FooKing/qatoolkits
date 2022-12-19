@@ -3,21 +3,18 @@ import {
     AccordionDetails,
     AccordionSummary,
     Box,
-    Button, Color,
+    Button,
     TextField,
     Typography
 } from "@mui/material";
 import React from "react";
 import {browser} from "webextension-polyfill-ts";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 
-const boxBGColour: string = "#1f1f1f";
 let RegenXValue: number;
 function handleTourCommand(command: string) {
     console.log(command);
     browser.tabs.executeScript({
-        code: 'window.wrappedJSObject.__debugApi__.navigation.' + command
+        code: 'window.wrappedJSObject.__debugApi__.navigation.'+command
     }).then(undefined)
 }
 

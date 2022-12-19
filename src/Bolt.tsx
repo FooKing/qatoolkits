@@ -2,16 +2,14 @@ import {
     Box,
     Button,
     FormControl,
-    Input, InputLabel,
+    InputLabel,
     MenuItem,
     Select,
-    SelectChangeEvent,
     Tab,
     Tabs,
     Typography
 } from "@mui/material";
 import React, {useState} from "react";
-import {browser} from "webextension-polyfill-ts";
 
 
 
@@ -41,7 +39,7 @@ function TabPanel(props: TabPanelProps) {
     );
 }
 
-function a11yProps(index: number) {
+function populateTabs(index: number) {
     return {
         id: `vertical-tab-${index}`,
         'aria-controls': `vertical-tabpanel-${index}`,
@@ -78,8 +76,8 @@ function Bolt() {
         {Code: "project8.", Name: "Project 8"}
     ];
     const regionArray = [
-        {Code: 'us', Name: "US"},
-        {Code: "com", Name: "UK"}
+        {Code: 'com', Name: "UK"},
+        {Code: "us", Name: "US"}
     ];
 
     function frontendGoButton() {
@@ -96,29 +94,31 @@ function Bolt() {
                 variant="scrollable"
                 value={value}
                 onChange={handleChange}
-                sx={{ borderRight: 1, borderColor: 'divider' }}
+                sx={{ borderRight: 1, borderColor: 'divider', minWidth:100 }}
             >
-                <Tab label="Frontend" {...a11yProps(0)} />
-                <Tab label="Jenkins" {...a11yProps(1)} />
-                <Tab label="Rundeck" {...a11yProps(2)} />
-                <Tab label="Item Four" {...a11yProps(3)} />
-                <Tab label="Item Five" {...a11yProps(4)} />
-                <Tab label="Item Six" {...a11yProps(5)} />
-                <Tab label="Item Seven" {...a11yProps(6)} />
+                <Tab label="Frontend" {...populateTabs(0)} />
+                <Tab label="Jenkins" {...populateTabs(1)} />
+                <Tab label="Rundeck" {...populateTabs(2)} />
+                <Tab label="Item Four" {...populateTabs(3)} />
+                <Tab label="Item Five" {...populateTabs(4)} />
+                <Tab label="Item Six" {...populateTabs(5)} />
+                <Tab label="Item Seven" {...populateTabs(6)} />
             </Tabs>
             <TabPanel value={value} index={0}>
                 <Box >
-                   <FormControl sx={{width:100}}>
+                   <FormControl sx={{ m: 1, width:90 }} variant="outlined">
                        <InputLabel>Environment</InputLabel>
-                        <Select size="small" id="projectSelect" onChange={handleEnvironmentChange}>
+                        <Select size="small" id="projectSelect" onChange={handleEnvironmentChange}
+                                MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
                             {environmentArray.map(({Code, Name},index ) => {
                                 return <MenuItem key={index} value={Code}>{Name}</MenuItem>
                             })}
                         </Select>
-                   </FormControl>
-                    <FormControl sx={{width:100}}>
+                   </FormControl >
+                    <FormControl sx={{ m: 1, width:90 }} variant="outlined">
                         <InputLabel>Region</InputLabel>
-                        <Select size="small" id="regionSelect" onChange={handleRegionChange}>
+                        <Select size="small" id="regionSelect" onChange={handleRegionChange}
+                                MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
                             {regionArray.map(({Code, Name},index ) => {
                                 return <MenuItem key={index} value={Code}>{Name}</MenuItem>
                             })}
