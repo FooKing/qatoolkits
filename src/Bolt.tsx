@@ -1,4 +1,15 @@
-import {Box, Button, Input, MenuItem, Select, SelectChangeEvent, Tab, Tabs, Typography} from "@mui/material";
+import {
+    Box,
+    Button,
+    FormControl,
+    Input, InputLabel,
+    MenuItem,
+    Select,
+    SelectChangeEvent,
+    Tab,
+    Tabs,
+    Typography
+} from "@mui/material";
 import React, {useState} from "react";
 import {browser} from "webextension-polyfill-ts";
 
@@ -37,36 +48,47 @@ function a11yProps(index: number) {
     };
 }
 
-function TestConsoleButton() {
-    console.log("ButtonPressed")
-    window.open(("Https://www.frontend.wrenkitchens.com"))
-    browser.tabs.executeScript({
-        code: 'alert("hello");'
-    }).then(r => console.log("CompletedRequest") );
-}
+
 
 function Bolt() {
     const [value, setValue] = React.useState(0);
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
-    const handleSelectChange = (event: SelectChangeEvent<string>, child: React.ReactNode) => {
 
-    };
-    const [project, setProject] = useState('');
+
+    const [environment, setEnvironment] = useState('');
+
+    const [region, setRegion] = useState('');
+
+    const handleEnvironmentChange = (e:any) => setEnvironment(e.target.value);
+
+    const handleRegionChange = (e:any) => setRegion(e.target.value);
+
     const environmentArray = [
-        "Live",
-        "Project0",
-        "Project1",
-        "Project2",
-        "Project3",
-        "Project4",
-        "Project5",
-        "Project6",
-        "Project7",
-        "Project8",
+        {Code: ' ', Name: "Live"},
+        {Code: "project0.", Name: "Project 0"},
+        {Code: "project1.", Name: "Project 1"},
+        {Code: "project2.", Name: "Project 2"},
+        {Code: "project3.", Name: "Project 3"},
+        {Code: "project4.", Name: "Project 4"},
+        {Code: "project5.", Name: "Project 5"},
+        {Code: "project6.", Name: "Project 6"},
+        {Code: "project7.", Name: "Project 7"},
+        {Code: "project8.", Name: "Project 8"}
+    ];
+    const regionArray = [
+        {Code: 'us', Name: "US"},
+        {Code: "com", Name: "UK"}
     ];
 
+    function frontendGoButton() {
+        let currentUrl = "Https://www."+environment+"frontend.wrenkitchens."+region;
+        console.log(currentUrl.replace(/\s+/g, ''));
+        window.open((currentUrl.replace(/\s+/g, '')));
+    }
+
+    let projectValue;
     return (
         <Box sx={{ flexGrow: 1, display: 'flex', height: 224, borderRadius:1, border:1, padding:"5px"}}>
             <Tabs
@@ -86,13 +108,23 @@ function Bolt() {
             </Tabs>
             <TabPanel value={value} index={0}>
                 <Box >
-                   <label>Env: </label>
-                    <Select size="small" id="projectSelect" sx={{width:100}} onChange={handleSelectChange}>
-                        {environmentArray.map((environmentValue) => {
-                            return <MenuItem value={environmentValue}>{environmentValue}</MenuItem>
-                        })}
-                    </Select>
-                <Button onClick={TestConsoleButton} > Go </Button>
+                   <FormControl sx={{width:100}}>
+                       <InputLabel>Environment</InputLabel>
+                        <Select size="small" id="projectSelect" onChange={handleEnvironmentChange}>
+                            {environmentArray.map(({Code, Name},index ) => {
+                                return <MenuItem key={index} value={Code}>{Name}</MenuItem>
+                            })}
+                        </Select>
+                   </FormControl>
+                    <FormControl sx={{width:100}}>
+                        <InputLabel>Region</InputLabel>
+                        <Select size="small" id="regionSelect" onChange={handleRegionChange}>
+                            {regionArray.map(({Code, Name},index ) => {
+                                return <MenuItem key={index} value={Code}>{Name}</MenuItem>
+                            })}
+                        </Select>
+                    </FormControl>
+                <Button onClick={frontendGoButton}> Go </Button>
                 </Box>
             </TabPanel>
             <TabPanel value={value} index={1}>
