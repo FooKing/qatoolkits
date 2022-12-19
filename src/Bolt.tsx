@@ -54,7 +54,6 @@ function Bolt() {
         setValue(newValue);
     };
 
-
     const [environment, setEnvironment] = useState('');
 
     const [region, setRegion] = useState('');
