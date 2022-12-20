@@ -10,7 +10,7 @@ const randomColourClicked = () =>{
     navigator.clipboard.writeText('#000000'.slice(0, -randomColour.length) + randomColour)
 }
 
-function ColourSelector() {
+function ColourSelector(): JSX.Element {
     return (
         <div>
             <SliderPicker onChangeComplete={colorPickerChange}></SliderPicker>
