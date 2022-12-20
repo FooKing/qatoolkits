@@ -46,6 +46,7 @@
     ]
   },
   "devDependencies": {
+    "web-ext": "^7.4.0",
     "webextension-polyfill-ts": "^0.26.0"
   }
 }

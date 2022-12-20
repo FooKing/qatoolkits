@@ -5,21 +5,18 @@ import React from "react";
 const colorPickerChange = (color: ColorResult) => {
     navigator.clipboard.writeText(color.hex)
 };
-
-let randomColour;
 const randomColourClicked = () =>{
     let randomColour = Math.floor(Math.random() * 16777216).toString(16);
     navigator.clipboard.writeText('#000000'.slice(0, -randomColour.length) + randomColour)
 }
 
-function ColourSelector(this: any) {
+function ColourSelector() {
     return (
         <div>
-            <SliderPicker onChangeComplete={ colorPickerChange }></SliderPicker>
+            <SliderPicker onChangeComplete={colorPickerChange}></SliderPicker>
             <Box sx={{ m: '2rem' }} />
             <Button variant="contained" onClick={randomColourClicked} >Random Colour</Button>
         </div>
     );
 }
-
 export default ColourSelector;

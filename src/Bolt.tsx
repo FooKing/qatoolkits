@@ -80,7 +80,7 @@ function Bolt() {
     ];
 
     function frontendGoButton() {
-        let currentUrl = "Https://www."+environment+"frontend.wrenkitchens."+region;
+        let currentUrl = "Https://frontend."+environment+"wrenkitchens."+region;
         console.log(currentUrl.replace(/\s+/g, ''));
         window.open((currentUrl.replace(/\s+/g, '')));
     }

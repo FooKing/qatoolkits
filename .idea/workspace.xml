@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b9e7239-1912-4b06-b7d4-c19c9b5ac9ed" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/build.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Bolt.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bolt.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ColourSelector.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ColourSelector.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ConsoleCommands.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ConsoleCommands.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +56,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\skage\\OneDrive\\Desktop\\qatoolkits\\node_modules\\typescript\\lib&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/chris.scarratt/qatoolkits/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -80,6 +87,7 @@
       <workItem from="1671268727609" duration="6857000" />
       <workItem from="1671356078065" duration="8428000" />
       <workItem from="1671475119798" duration="7612000" />
+      <workItem from="1671539844615" duration="637000" />
     </task>
     <servers />
   </component>

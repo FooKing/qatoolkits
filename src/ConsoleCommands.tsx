@@ -14,7 +14,7 @@ let RegenXValue: number;
 function handleTourCommand(command: string) {
     console.log(command);
     browser.tabs.executeScript({
-        code: 'window.wrappedJSObject.__debugApi__.navigation.'+command
+        code: 'window.wrappedJSObject.__debugApi__'+command
     }).then(undefined)
 }
 
@@ -44,11 +44,12 @@ function ConsoleCommands() {
                             <TextField id="RegenY" label="Y" type="number" variant="outlined" size="small" sx={{ width: 80}}></TextField>
                             <Button variant="contained" fullWidth onClick={() =>handleTourCommand("regeneratePath()")}> Regen Route </Button>
                         </Box>
-                        <Button variant="contained" onClick={() =>handleTourCommand("drawPath()")}>Draw Route</Button>
-                        <Button variant="contained" onClick={() =>handleTourCommand("drawEdges()")}>Draw Edges</Button>
-                        <Button variant="contained" onClick={() =>handleTourCommand("drawNodes()")}>Draw Nodes</Button>
-                        <Button variant="contained" onClick={() =>handleTourCommand("drawPruned()")}>Draw Pruned</Button>
-                        <Button variant="contained" onClick={() =>handleTourCommand("drawWidgetBounds()")}>Widget Bounds</Button>
+                        <Button variant="contained" onClick={() =>handleTourCommand(".navigation.drawPath()")}>Draw Route</Button>
+                        <Button variant="contained" onClick={() =>handleTourCommand(".navigation.drawEdges()")}>Draw Edges</Button>
+                        <Button variant="contained" onClick={() =>handleTourCommand(".navigation.drawNodes()")}>Draw Nodes</Button>
+                        <Button variant="contained" onClick={() =>handleTourCommand(".navigation.drawPrunedNodes()")}>Draw Pruned</Button>
+                        <Button variant="contained" onClick={() =>handleTourCommand(".navigation.drawWidgetBounds()")}>Widget Bounds</Button>
+                        <Button variant="contained" onClick={() =>handleTourCommand(".clear()")}>Clear All</Button>
                     </Box>
                 </AccordionDetails>
             </Accordion>
