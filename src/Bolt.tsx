@@ -4,7 +4,7 @@ import {
     FormControl,
     InputLabel,
     MenuItem,
-    Select,
+    Select, SelectChangeEvent,
     Tab,
     Tabs,
     Typography
@@ -58,9 +58,9 @@ function Bolt() {
 
     const [region, setRegion] = useState('');
 
-    const handleEnvironmentChange = (e:any) => setEnvironment(e.target.value);
+    const handleEnvironmentChange = (e:SelectChangeEvent) => setEnvironment(e.target.value);
 
-    const handleRegionChange = (e:any) => setRegion(e.target.value);
+    const handleRegionChange = (e:SelectChangeEvent) => setRegion(e.target.value);
 
     const environmentArray = [
         {Code: ' ', Name: "Live"},
@@ -84,8 +84,6 @@ function Bolt() {
         console.log(currentUrl.replace(/\s+/g, ''));
         window.open((currentUrl.replace(/\s+/g, '')));
     }
-
-    let projectValue;
     return (
         <Box sx={{ flexGrow: 1, display: 'flex', height: 224, borderRadius:1, border:1, padding:"5px"}}>
             <Tabs

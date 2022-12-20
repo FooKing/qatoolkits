@@ -2,18 +2,15 @@ import {
     Accordion,
     AccordionDetails,
     AccordionSummary,
-    Box,
-    Button,
     createTheme, CssBaseline,
     ThemeProvider,
     Typography,
-    useMediaQuery
 } from '@mui/material';
 import React from 'react';
 import ColourSelector from "./ColourSelector";
-import { browser } from "webextension-polyfill-ts";
 import Bolt from "./Bolt";
 import ConsoleCommands from "./ConsoleCommands";
+import ThreeDDownloader from "./ThreeDDownloader";
 
 
 function App() {
@@ -108,6 +105,16 @@ function App() {
               <AccordionDetails>
                   <Typography>
                       <ConsoleCommands></ConsoleCommands>
+                  </Typography>
+              </AccordionDetails>
+          </Accordion>
+          <Accordion expanded={expanded === 'Downloader'} onChange={handleChange('Downloader')}>
+              <AccordionSummary aria-controls="Downloader-content" id="Downloader-header">
+                  <Typography fontSize={18} fontWeight={"semi bold"} >3D Downloader</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                  <Typography>
+                      <ThreeDDownloader></ThreeDDownloader>
                   </Typography>
               </AccordionDetails>
           </Accordion>
