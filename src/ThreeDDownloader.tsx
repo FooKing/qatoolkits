@@ -32,30 +32,53 @@ function ThreeDDownloader() {
 
     ];
 
+    async function startUnzip(unzipDownloadItem: number) {
+        const downloads = await browser.downloads.search({id: (unzipDownloadItem)});
+        const download = downloads[0];
+        console.log(download.filename)
+    }
+
     async function trackDownloadProgress(downloadItem: number) {
 
+        // Setup looping check
         const id = setInterval(async () => {
+
+            // search for the download by the ID passed downloadItem
             const downloads = await browser.downloads.search({id: (downloadItem)});
+
+            // Get first download found that matches ID
             const download = downloads[0];
-            console.log(downloadItem);
-            console.log(`Totalbytes = ${download.totalBytes} and bytesRecieved = ${download.bytesReceived}`)
-            let downloadPercent = (download.bytesReceived / download.totalBytes) * 100;
-            console.log(`Download progress: ${downloadPercent}%`);
-            if (download.state === 'complete' || download.state === 'interrupted') {
-                clearInterval(id)
+
+            // Check current download state.
+            switch (download.state) {
+                case 'complete':
+                    setUserFeedbackMessage(`Download complete`);
+                    clearInterval(id);
+                    await startUnzip(downloadItem);
+                    break;
+                case 'interrupted':
+                    setUserFeedbackMessage(`Download failed`);
+                    clearInterval(id);
+                    break;
+                case 'in_progress':
+                    let downloadPercent = Math.round((download.bytesReceived / download.totalBytes) * 100);
+                    setUserFeedbackMessage(`Downloading ${downloadPercent}% complete`);
+                    break;
             }
-        }, 2000);
+            //Interval between loops
+        }, 500);
     }
-   async function handleDownloadButton() {
+    async function handleDownloadButton() {
         if ((environment ?? null) && (currentVersion ?? null)) {
             let currentUrl = environment;
-            await browser.downloads.download({url: currentUrl, filename: 'Planner3D v' + currentVersion + '.zip'}).then((downloadItem) => {
+            setUserFeedbackMessage(`Download Started`);
+            await browser.downloads.download({url: currentUrl,conflictAction: "overwrite", filename: 'Planner3D.zip'}).then((downloadItem) => {
                 trackDownloadProgress(downloadItem)
             });
         }
-     }
+    }
     return (
-        <Box sx={{ flexGrow: 1, height: 100, borderRadius:1, border:1, padding:"5px"}}>
+        <Box sx={{ flexGrow: 1, height: 100, width:300, borderRadius:1, border:1, padding:"5px"}}>
             <FormControl sx={{ m: 1, width:90 }} variant="standard">
                 <InputLabel>Version</InputLabel>
                 <Input type= "number" value={currentVersion} onChange={handleVersionChange}></Input>
@@ -70,7 +93,7 @@ function ThreeDDownloader() {
                 </Select>
             </FormControl >
                 <Button  sx={{ m: 1, alignItems:"baseline"}} size="small" variant="contained" onClick={handleDownloadButton}> Download </Button>
-            <p> Hey update please {userFeedbackMessage}</p>
+            <p>{userFeedbackMessage}</p>
         </Box>
     );
 }
