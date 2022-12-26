@@ -16,7 +16,7 @@ function ThreeDDownloader() {
     const [environment, setEnvironment] = useState('');
     const handleVersionChange = (e:React.ChangeEvent<HTMLInputElement>) => setCurrentVersion(e.currentTarget.value);
     const handleEnvironmentChange = (e:SelectChangeEvent) => setEnvironment(e.target.value);
-
+    let [userFeedbackMessage, setUserFeedbackMessage] = useState('');
 
     const environmentArray = [
         {Code: "Https://static.wrenkitchens.com/planner3d/gameCI/"+currentVersion+"/Planner3D.zip", Name: "Live"},
@@ -32,22 +32,28 @@ function ThreeDDownloader() {
 
     ];
 
-    function onFailed(error: any) {
-        console.log(`Download failed: ${error}`)
-    }
+    async function trackDownloadProgress(downloadItem: number) {
 
-    function onStartedDownload(id: any) {
-        console.log(`Started downloading: ${id}`)
+        const id = setInterval(async () => {
+            const downloads = await browser.downloads.search({id: (downloadItem)});
+            const download = downloads[0];
+            console.log(downloadItem);
+            console.log(`Totalbytes = ${download.totalBytes} and bytesRecieved = ${download.bytesReceived}`)
+            let downloadPercent = (download.bytesReceived / download.totalBytes) * 100;
+            console.log(`Download progress: ${downloadPercent}%`);
+            if (download.state === 'complete' || download.state === 'interrupted') {
+                clearInterval(id)
+            }
+        }, 2000);
     }
-
-    function handleDownloadButton() {
+   async function handleDownloadButton() {
         if ((environment ?? null) && (currentVersion ?? null)) {
             let currentUrl = environment;
-            let downloading = browser.downloads.download({url: currentUrl, filename: 'Planner3D v' + currentVersion + '.zip'});
-            downloading.then(onStartedDownload, onFailed);
+            await browser.downloads.download({url: currentUrl, filename: 'Planner3D v' + currentVersion + '.zip'}).then((downloadItem) => {
+                trackDownloadProgress(downloadItem)
+            });
         }
-
-    }
+     }
     return (
         <Box sx={{ flexGrow: 1, height: 100, borderRadius:1, border:1, padding:"5px"}}>
             <FormControl sx={{ m: 1, width:90 }} variant="standard">
@@ -64,6 +70,7 @@ function ThreeDDownloader() {
                 </Select>
             </FormControl >
                 <Button  sx={{ m: 1, alignItems:"baseline"}} size="small" variant="contained" onClick={handleDownloadButton}> Download </Button>
+            <p> Hey update please {userFeedbackMessage}</p>
         </Box>
     );
 }
