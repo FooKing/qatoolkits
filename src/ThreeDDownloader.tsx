@@ -121,7 +121,7 @@ function ThreeDDownloader() {
             </FormControl>
             <FormControl sx={{ m: 1, width:90 }} variant="standard">
                 <InputLabel>Environment</InputLabel>
-                <Select size="small" id="projectSelect" value={environment} defaultValue={enviroArray[0].Name} onChange={handleEnvironmentChange}
+                <Select size="small" id="projectSelect" value={environment} onChange={handleEnvironmentChange}
                         MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
                     {enviroArray.map(({Code, Name},index ) => {
                         return <MenuItem key={index} value={Code}>{Name}</MenuItem>
