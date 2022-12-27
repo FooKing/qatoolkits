@@ -3,7 +3,7 @@ import {
     AccordionDetails,
     AccordionSummary,
     Box,
-    Button, SelectChangeEvent,
+    Button,
     TextField,
     Typography
 } from "@mui/material";
@@ -14,12 +14,6 @@ import {browser} from "webextension-polyfill-ts";
 function DebugCommands() {
     const [regenXValue, setRegenXValue] = useState<number | null>(null);
     const [regenYValue, setRegenYValue] = useState<number | null>(null);
-    function handleTourCommand(command: string) {
-        console.log(command);
-        browser.tabs.executeScript({
-            code: 'window.wrappedJSObject.' + command
-        }).then(undefined)
-    }
 
     const regenXChange = (e: React.ChangeEvent<HTMLInputElement>) => setRegenXValue(e.target.value === "" ? null : Number(e.target.value));
     const regenYChange = (e: React.ChangeEvent<HTMLInputElement>) => setRegenYValue(e.target.value === "" ? null : Number(e.target.value));
@@ -29,6 +23,12 @@ function DebugCommands() {
         (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
             setExpanded(newExpanded ? panel : false);
         };
+    function handleTourCommand(command: string) {
+        console.log(command);
+        browser.tabs.executeScript({
+            code: 'window.wrappedJSObject.' + command
+        }).then(undefined)
+    }
 
     function handleRegenRouteButton() {
         if (regenXValue !== null && regenYValue !== null ) {
