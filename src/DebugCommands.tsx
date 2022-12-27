@@ -22,7 +22,7 @@ function regenXChange() {
 
 }
 
-function ConsoleCommands() {
+function DebugCommands() {
 
 
     const [expanded, setExpanded] = React.useState<string | false>('panel1');
@@ -32,8 +32,8 @@ function ConsoleCommands() {
         };
 
     return (
-        <Box sx={{ width: 1,}}>
-            <Accordion sx={{ width: 1,  borderRadius:1, border:1 }} expanded={expanded === '3DTours'} onChange={handleChange('3DTours')}>
+        <Box sx={{width:350}}>
+            <Accordion sx={{width: 1,border: 1,borderRadius: 1, marginBottom:"5px"}} expanded={expanded === '3DTours'} onChange={handleChange('3DTours')}>
                 <AccordionSummary aria-controls="3DTours-content" id="3DTours-header">
                     <Typography fontSize={18} fontWeight={"semi bold"} >3D Tours</Typography>
                 </AccordionSummary>
@@ -53,7 +53,7 @@ function ConsoleCommands() {
                     </Box>
                 </AccordionDetails>
             </Accordion>
-            <Accordion sx={{ width: 1,  borderRadius:1, border:1 }} expanded={expanded === 'FloorShapes'} onChange={handleChange('FloorShapes')}>
+            <Accordion sx={{width: 1,border: 1,borderRadius: 1, marginBottom:"5px"}} expanded={expanded === 'FloorShapes'} onChange={handleChange('FloorShapes')}>
                 <AccordionSummary aria-controls="FloorShapes-content" id="FloorShapes-header">
                     <Typography fontSize={18} fontWeight={"semi bold"} >Floor Shapes</Typography>
                 </AccordionSummary>
@@ -71,4 +71,4 @@ function ConsoleCommands() {
     );
 }
 
-export default ConsoleCommands;
+export default DebugCommands;

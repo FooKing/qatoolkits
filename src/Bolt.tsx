@@ -85,7 +85,7 @@ function Bolt() {
         window.open((currentUrl.replace(/\s+/g, '')));
     }
     return (
-        <Box sx={{ flexGrow: 1, display: 'flex', height: 224, borderRadius:1, border:1, padding:"5px"}}>
+        <Box sx={{ flexGrow: 1, display: 'flex', height: 224,width: 350, borderRadius:1, border:1, padding:"5px"}}>
             <Tabs
                 orientation="vertical"
                 variant="scrollable"

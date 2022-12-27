@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import ColourSelector from "./ColourSelector";
 import Bolt from "./Bolt";
-import ConsoleCommands from "./ConsoleCommands";
+import DebugCommands from "./DebugCommands";
 import ThreeDDownloader from "./ThreeDDownloader";
 
 
@@ -98,13 +98,13 @@ function App() {
                   </Typography>
               </AccordionDetails>
           </Accordion>
-          <Accordion expanded={expanded === 'ConsoleCommands'} onChange={handleChange('ConsoleCommands')}>
-              <AccordionSummary aria-controls="ConsoleCommands-content" id="ConsoleCommands-header">
+          <Accordion expanded={expanded === 'DebugCommands'} onChange={handleChange('DebugCommands')}>
+              <AccordionSummary aria-controls="DebugCommands-content" id="ConsoleCommands-header">
                   <Typography fontSize={18} fontWeight={"semi bold"} >Debug Commands</Typography>
               </AccordionSummary>
               <AccordionDetails>
                   <Typography>
-                      <ConsoleCommands></ConsoleCommands>
+                      <DebugCommands></DebugCommands>
                   </Typography>
               </AccordionDetails>
           </Accordion>
