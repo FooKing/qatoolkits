@@ -41,7 +41,7 @@ function DebugCommands() {
 
     return (
         <Box sx={{width:350}}>
-            <Accordion sx={{width: 1,border: 1,borderRadius: 1, marginBottom:"5px"}} expanded={expanded === '3DTours'} onChange={handleChange('3DTours')}>
+            <Accordion sx={{width:350, border: 1,borderRadius: 1, gap:5}} expanded={expanded === '3DTours'} onChange={handleChange('3DTours')}>
                 <AccordionSummary aria-controls="3DTours-content" id="3DTours-header">
                     <Typography fontSize={18} fontWeight={"semi bold"} >3D Tours</Typography>
                 </AccordionSummary>
@@ -61,7 +61,7 @@ function DebugCommands() {
                     </Box>
                 </AccordionDetails>
             </Accordion>
-            <Accordion sx={{width: 1,border: 1,borderRadius: 1, marginBottom:"5px"}} expanded={expanded === 'FloorShapes'} onChange={handleChange('FloorShapes')}>
+            <Accordion sx={{width:350 ,border: 1,borderRadius: 2, gap:"50px"}} expanded={expanded === 'FloorShapes'} onChange={handleChange('FloorShapes')}>
                 <AccordionSummary aria-controls="FloorShapes-content" id="FloorShapes-header">
                     <Typography fontSize={18} fontWeight={"semi bold"} >Floor Shapes</Typography>
                 </AccordionSummary>

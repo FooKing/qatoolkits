@@ -12,11 +12,11 @@ const randomColourClicked = () =>{
 
 function ColourSelector(): JSX.Element {
     return (
-        <div>
+        <Box sx={{width: 350, height:125, borderRadius:1, border:1, padding:"10px"}}>
             <SliderPicker onChangeComplete={colorPickerChange}></SliderPicker>
             <Box sx={{ m: '2rem' }} />
             <Button variant="contained" onClick={randomColourClicked} >Random Colour</Button>
-        </div>
+        </Box>
     );
 }
 export default ColourSelector;
