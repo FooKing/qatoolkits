@@ -55,12 +55,12 @@ function Bolt() {
     };
 
     const [environment, setEnvironment] = useState('');
-
     const [region, setRegion] = useState('');
+    const [jenkins, setJenkins] = useState('');
 
     const handleEnvironmentChange = (e:SelectChangeEvent) => setEnvironment(e.target.value);
-
     const handleRegionChange = (e:SelectChangeEvent) => setRegion(e.target.value);
+    const handleJenkinsChange = (e:SelectChangeEvent) => setJenkins(e.target.value);
 
     const environmentArray = [
         {Code: ' ', Name: "Live"},
@@ -79,11 +79,21 @@ function Bolt() {
         {Code: "us", Name: "US"}
     ];
 
+    const jenkinsArray = [
+        {Code: 'gameCI', Name: "NativeMac"},
+        {Code: "gameCI-windows", Name: "NativeWin"}
+    ];
+
     function frontendGoButton() {
         let currentUrl = "Https://frontend."+environment+"wrenkitchens."+region;
         console.log(currentUrl.replace(/\s+/g, ''));
         window.open((currentUrl.replace(/\s+/g, '')));
     }
+
+    function jenkinsGoButton() {
+
+    }
+
     return (
         <Box sx={{ flexGrow: 1, display: 'flex', height: 224,width: 350, borderRadius:1, border:1, padding:"5px"}}>
             <Tabs
@@ -121,7 +131,27 @@ function Bolt() {
                 </Box>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Jenkins
+                <Box >
+                    <FormControl sx={{ m: 1, width:90 }} variant="standard">
+                        <InputLabel>Environment</InputLabel>
+                        <Select size="small" id="projectSelect" onChange={handleEnvironmentChange}
+                                MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
+                            {environmentArray.map(({Code, Name},index ) => {
+                                return <MenuItem key={index} value={Code}>{Name}</MenuItem>
+                            })}
+                        </Select>
+                    </FormControl >
+                    <FormControl sx={{ m: 1, width:90 }} variant="standard">
+                        <InputLabel>Jenkins</InputLabel>
+                        <Select size="small" id="regionSelect" onChange={handleJenkinsChange}
+                                MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
+                            {jenkinsArray.map(({Code, Name},index ) => {
+                                return <MenuItem key={index} value={Code}>{Name}</MenuItem>
+                            })}
+                        </Select>
+                    </FormControl>
+                    <Button onClick={jenkinsGoButton}> Go </Button>
+                </Box>
             </TabPanel>
             <TabPanel value={value} index={2}>
                 Rundecks
