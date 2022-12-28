@@ -6,11 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4b9e7239-1912-4b06-b7d4-c19c9b5ac9ed" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/logo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/logo.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DebugCommands.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/DebugCommands.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TestScript.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reportWebVitals.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/reportWebVitals.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ThreeDDownloader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ThreeDDownloader.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +57,7 @@
     "nodejs_package_manager_path": "npm",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
-    "ts.external.directory.path": "C:\\Users\\skage\\OneDrive\\Desktop\\qatoolkits\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "/Users/chris.scarratt/qatoolkits/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -104,6 +101,7 @@
       <workItem from="1672131400416" duration="12971000" />
       <workItem from="1672171323367" duration="1601000" />
       <workItem from="1672172956903" duration="583000" />
+      <workItem from="1672213737136" duration="1324000" />
     </task>
     <servers />
   </component>

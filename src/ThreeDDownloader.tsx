@@ -42,7 +42,7 @@ function ThreeDDownloader() {
         let currentDownloadUrl = "";
         if (isLatest) {
             const requestUrl = new XMLHttpRequest();
-            const versionCheckUrl = `https://${staticLocation}.wrenkitchens.com/planner3d/gameCI/${environment}version.txt`.replace(/\s+/g,'');
+            const versionCheckUrl = `https://${staticLocation}.wrenkitchens.com/planner3d/${currentPlatform}/${environment}version.txt`.replace(/\s+/g,'');
             requestUrl.open('GET', versionCheckUrl);
             requestUrl.send();
             requestUrl.onload = async function () {
@@ -63,8 +63,9 @@ function ThreeDDownloader() {
     }
 
     const handleDownloadManifestButton = async () => {
-        const manifestUrl = `https://${staticLocation}.wrenkitchens.com/planner3d/gameCI/${environment}manifest.json`.replace(/\s+/g,'');
-        await handleDownload(manifestUrl, 'manifest.json')
+        //project-static.wrenkitchens.com/planner3d/assets/project4/2021.3.4f1/standaloneosx/standaloneosx.manifest
+        const manifestUrl = `https://${staticLocation}.wrenkitchens.com/planner3d/assets/${environment}2021.3.4f1/standaloneosx/standaloneosx.manifest`.replace(/\s+/g,'');
+        await handleDownload(manifestUrl, 'standaloneosx.manifest')
        };
 
     const handleLatestChange = (e: SelectChangeEvent) => {
@@ -85,6 +86,7 @@ function ThreeDDownloader() {
         }).then((downloadItem) => {
             trackDownloadProgress(downloadItem)
             setIsDownloading(true);
+            console.log(downloadUrl);
         });
     }
     async function trackDownloadProgress(downloadItem: number) {
@@ -116,7 +118,7 @@ function ThreeDDownloader() {
                 <InputLabel>Platform</InputLabel>
                 <Select size="small" id="LatestSelect" defaultValue={'gameCI'} onChange={handlePlatformChange}>
                     <MenuItem value={'gameCI'}>Mac</MenuItem>
-                    <MenuItem value={'winCI'}>Win</MenuItem>
+                    <MenuItem value={'gameci-windows'}>Win</MenuItem>
                 </Select>
             </FormControl>
             <FormControl sx={{ m: 1, width:90 }} variant="standard">
