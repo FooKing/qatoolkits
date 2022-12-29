@@ -56,32 +56,38 @@ function Bolt() {
 
     const [environment, setEnvironment] = useState('');
     const [region, setRegion] = useState('');
-    const [jenkins, setJenkins] = useState('');
+    const [jenkinsJob, setJenkinsJob] = useState('');
 
     const handleEnvironmentChange = (e:SelectChangeEvent) => setEnvironment(e.target.value);
     const handleRegionChange = (e:SelectChangeEvent) => setRegion(e.target.value);
-    const handleJenkinsChange = (e:SelectChangeEvent) => setJenkins(e.target.value);
-
+    const handleJenkinsChange = (e:SelectChangeEvent) => setJenkinsJob(e.target.value);
     const environmentArray = [
-        {Code: ' ', Name: "Live"},
-        {Code: "project0.", Name: "Project 0"},
-        {Code: "project1.", Name: "Project 1"},
-        {Code: "project2.", Name: "Project 2"},
-        {Code: "project3.", Name: "Project 3"},
-        {Code: "project4.", Name: "Project 4"},
-        {Code: "project5.", Name: "Project 5"},
-        {Code: "project6.", Name: "Project 6"},
-        {Code: "project7.", Name: "Project 7"},
-        {Code: "project8.", Name: "Project 8"}
-    ];
-    const regionArray = [
-        {Code: 'com', Name: "UK"},
-        {Code: "us", Name: "US"}
+        {Code: '', Name: "Live", Jenkins: "master"},
+        {Code: "project0.", Name: "Project 0", Jenkins: "project0"},
+        {Code: "project1.", Name: "Project 1", Jenkins: "project1"},
+        {Code: "project2.", Name: "Project 2", Jenkins: "project2"},
+        {Code: "project3.", Name: "Project 3", Jenkins: "project3"},
+        {Code: "project4.", Name: "Project 4", Jenkins: "project4"},
+        {Code: "project5.", Name: "Project 5", Jenkins: "project5"},
+        {Code: "project6.", Name: "Project 6", Jenkins: "project6"},
+        {Code: "project7.", Name: "Project 7", Jenkins: "project7"},
+        {Code: "project8.", Name: "Project 8", Jenkins: "project8"}
     ];
 
-    const jenkinsArray = [
-        {Code: 'gameCI', Name: "NativeMac"},
-        {Code: "gameCI-windows", Name: "NativeWin"}
+    const regionArray = [
+        {Code: 'com', Name: "UK", Jenkins: 'build-gb'},
+        {Code: "us", Name: "US", Jenkins: 'build-us'}
+    ];
+
+    const jenkinsJobsArray = [
+        {Code: 'planner3d-gameci-native/', Name: "Planner3D Mac"},
+        {Code: "planner3d-gameci-native-windows/", Name: "Planner3D Win"},
+        {Code: "planner3d-assets-gameci", Name: "Planner3D Assets"},
+        {Code: "planner3d-light-atlasser-vr2", Name: "Planner3D Light Atlasser"},
+        {Code: "wrender-gameci-test", Name: "Planner3D HQ"},
+        {Code: "planner2d", Name: "Planner2D"},
+        {Code: "frontend/", Name: "Frontend"},
+        {Code: "feeder", Name: "Feeder"},
     ];
 
     function frontendGoButton() {
@@ -90,9 +96,24 @@ function Bolt() {
         window.open((currentUrl.replace(/\s+/g, '')));
     }
 
-    function jenkinsGoButton() {
 
+    async function jenkinsGoButton() {
+        let jenkinsUrl = `https://jenkins.wrenkitchens.com/job/${jenkinsJob}/job/${region}/job/${environment}/`;
+
+        try {
+            const response = await fetch(jenkinsUrl);
+            if (response.ok){
+                window.open(jenkinsUrl)
+            }
+            else{
+                jenkinsUrl = `https://jenkins.wrenkitchens.com/job/${jenkinsJob}/job/build-gb/job/${environment}/`;
+                window.open(jenkinsUrl)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
+
 
     return (
         <Box sx={{ flexGrow: 1, display: 'flex', height: 224,width: 350, borderRadius:1, border:1, padding:"5px"}}>
@@ -133,20 +154,29 @@ function Bolt() {
             <TabPanel value={value} index={1}>
                 <Box >
                     <FormControl sx={{ m: 1, width:90 }} variant="standard">
+                        <InputLabel>Jenkins Job</InputLabel>
+                        <Select size="small" id="regionSelect" onChange={handleJenkinsChange}
+                                MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
+                            {jenkinsJobsArray.map(({Code, Name},index ) => {
+                                return <MenuItem key={index} value={Code}>{Name}</MenuItem>
+                            })}
+                        </Select>
+                    </FormControl>
+                    <FormControl sx={{ m: 1, width:90 }} variant="standard">
                         <InputLabel>Environment</InputLabel>
                         <Select size="small" id="projectSelect" onChange={handleEnvironmentChange}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
-                            {environmentArray.map(({Code, Name},index ) => {
-                                return <MenuItem key={index} value={Code}>{Name}</MenuItem>
+                            {environmentArray.map(({Jenkins, Name},index ) => {
+                                return <MenuItem key={index} value={Jenkins}>{Name}</MenuItem>
                             })}
                         </Select>
                     </FormControl >
                     <FormControl sx={{ m: 1, width:90 }} variant="standard">
-                        <InputLabel>Jenkins</InputLabel>
-                        <Select size="small" id="regionSelect" onChange={handleJenkinsChange}
+                        <InputLabel>Region</InputLabel>
+                        <Select size="small" id="regionSelect" onChange={handleRegionChange}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
-                            {jenkinsArray.map(({Code, Name},index ) => {
-                                return <MenuItem key={index} value={Code}>{Name}</MenuItem>
+                            {regionArray.map(({Jenkins, Name},index ) => {
+                                return <MenuItem key={index} value={Jenkins}>{Name}</MenuItem>
                             })}
                         </Select>
                     </FormControl>
