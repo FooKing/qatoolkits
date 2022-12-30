@@ -75,6 +75,16 @@ function DebugCommands() {
                     </Box>
                 </AccordionDetails>
             </Accordion>
+            <Accordion sx={{width:350 ,border: 1,borderRadius: 2, gap:"50px"}} expanded={expanded === 'AutoLayout'} onChange={handleChange('AutoLayout')}>
+                <AccordionSummary aria-controls="AutoLayout-content" id="AutoLayout-header">
+                    <Typography fontSize={18} fontWeight={"semi bold"} >Auto Layout</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Box sx={{ width: 'auto',display: 'grid', gap:2}}>
+                        <Button variant="contained" onClick={() =>handleTourCommand("__debugApi__.drawFloorInnerFeatures()")}>Draw Floor Inner Features</Button>
+                    </Box>
+                </AccordionDetails>
+            </Accordion>
         </Box>
     );
 }

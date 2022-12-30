@@ -14,28 +14,42 @@ function JsonTools() {
         }).then()
     }
     async function handleLoadJsonButton() {
-        console.log('Handlecalled')
+        //Read users clipboard and create a variable from it.
         let clipText = await navigator.clipboard.readText()
 
+        //Check if it's a URL link to json.
         if (clipText.startsWith("https://feeder")) {
             sendDebugCommand(`__debugApi__.set2DJsonByUrl("${clipText}")`);
-            console.log(`Starts with `);
-        } else {
+        }
+        else {
             const preparedJSON = JSON.stringify(clipText)
             sendDebugCommand(`__debugApi__.set2DJson(${preparedJSON})`);
-            console.log(clipText)
-            console.log(preparedJSON)
-            console.log(`Else`);
         }
+    }
 
-        // }).catch(error => {
-        //     console.log(error);
-        // });
+    async function handleGetPlanImages() {
+        //https://feeder.project6.wrenkitchens.com/plan/read-plan-json/51023076-2022-12-30-10-02-54.json
+        let clipText = await navigator.clipboard.readText()
+        console.log(clipText);
+        if(clipText.startsWith("https://feeder")) {
+            const parts = clipText.split("/");
+            const domain = parts[2]; // should output the feederURL.
+            const orderNumberPart = parts[5]; // should output order number with all extra details.
+            const orderNumberSplit = orderNumberPart.split("-");
+            const orderNumber = orderNumberSplit[0]; // should output clean order number
+            const feederPlanImageUrl = `https://${domain}/plan/image/get?planId=${orderNumber}&imageType=PREVIEW_IMAGE&debug=true`;
+            console.log(`https://${domain}/plan/image/get?planId=${orderNumber}&imageType=PREVIEW_IMAGE&debug=true`);
+            window.open(feederPlanImageUrl);
+        }
+        else {
+            console.log("Not a feeder link")
+        }
     }
 
     return (
-        <Box sx={{width: 350, height:125, borderRadius:1, border:1, padding:"10px"}}>
+        <Box sx={{width: 350, height:125, borderRadius:1, border:1, padding:"10px", gap:2, display: 'grid'}}>
             <Button variant="contained" onClick={handleLoadJsonButton} >Load Json From Clipboard</Button>
+            <Button variant="contained" onClick={handleGetPlanImages} >Get Plan Images From Json URL</Button>
         </Box>
     );
 }
