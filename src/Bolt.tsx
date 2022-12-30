@@ -11,8 +11,6 @@ import {
 } from "@mui/material";
 import React, {useState} from "react";
 
-
-
 interface TabPanelProps {
     children?: React.ReactNode;
     index: number;
@@ -47,13 +45,12 @@ function populateTabs(index: number) {
 }
 
 
-
 function Bolt() {
     //setup arrays first, then they can be used for initial values.
     const environmentArray = Array(9).fill( 9).map((_, i) => {
         return {Code: `project${i}.`, Name: `Project ${i}`, Jenkins: `project${i}`}
     })
-    // Put Live at the front so that it appears first
+    // Append Live into the array at the beginning.
     environmentArray.unshift({Code: ' ', Name: "Live", Jenkins: "master"})
 
     const regionArray = [
@@ -71,7 +68,7 @@ function Bolt() {
         {Code: "frontend/", Name: "Frontend"},
         {Code: "feeder", Name: "Feeder"},
     ];
-
+    const [boltFeedback, setBoltFeedback] = useState('');
     const [value, setValue] = React.useState(0);
     const [frontendEnvironment, setFrontendEnvironment] = useState(environmentArray[0].Code);
     const [frontendRegion, setFrontendRegion] = useState(regionArray[0].Code);
@@ -87,34 +84,46 @@ function Bolt() {
         setValue(newValue);
     };
 
+    async function frontendGoButton() {
+        let frontendUrl = "Https://frontend." + frontendEnvironment + "wrenkitchens." + frontendRegion;
+        setBoltFeedback(``);
+        try {
+            const response = await fetch(frontendUrl);
+            if (response.ok) {
+                console.log(frontendUrl.replace(/\s+/g, ''));
+                window.open((frontendUrl.replace(/\s+/g, '')));
+            } else {
 
-
-    function frontendGoButton() {
-        let currentUrl = "Https://frontend."+frontendEnvironment+"wrenkitchens."+frontendRegion;
-        console.log(currentUrl.replace(/\s+/g, ''));
-        window.open((currentUrl.replace(/\s+/g, '')));
+            }
+        } catch (error) {
+            console.log(error)
+            setBoltFeedback(`${error}`);
+        }
     }
-
 
     async function jenkinsGoButton() {
         let jenkinsUrl = `https://jenkins.wrenkitchens.com/job/${jenkinsJob}/job/${jenkinsRegion}/job/${jenkinsEnvironment}/`;
-
+        setBoltFeedback(``);
         try {
             const response = await fetch(jenkinsUrl);
             if (response.ok){
+                setBoltFeedback(``)
                 window.open(jenkinsUrl)
             }
             else{
                 jenkinsUrl = `https://jenkins.wrenkitchens.com/job/${jenkinsJob}/job/build-gb/job/${jenkinsEnvironment}/`;
                 window.open(jenkinsUrl)
+                setBoltFeedback("Url unreachable, check you're on internal network and VPN connection")
             }
         } catch (error) {
             console.log(error)
+            setBoltFeedback(`${error}`);
         }
     }
 
 
     return (
+        <div>
         <Box sx={{ flexGrow: 1, display: 'flex', height: 224,width: 350, borderRadius:1, border:1, padding:"5px"}}>
             <Tabs
                 orientation="vertical"
@@ -132,7 +141,7 @@ function Bolt() {
                 <Box >
                    <FormControl sx={{ m: 1, width:90 }} variant="standard">
                        <InputLabel>Environment</InputLabel>
-                        <Select size="small" id="projectSelect" defaultValue={environmentArray[0].Code} onChange={(e: SelectChangeEvent) => handleFrontendEnvironmentChange(e)}
+                        <Select size="small" id="projectSelect" defaultValue={frontendEnvironment} onChange={(e: SelectChangeEvent) => handleFrontendEnvironmentChange(e)}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
                             {environmentArray.map((env, index) => {
                                 return <MenuItem key={index} value={env.Code}>{env.Name}</MenuItem>
@@ -141,7 +150,7 @@ function Bolt() {
                    </FormControl >
                     <FormControl sx={{ m: 1, width:90 }} variant="standard">
                         <InputLabel>Region</InputLabel>
-                        <Select size="small" id="regionSelect" defaultValue={regionArray[0].Code} onChange={(e: SelectChangeEvent) => handleFrontendRegionChange(e)}
+                        <Select size="small" id="regionSelect" defaultValue={frontendRegion} onChange={(e: SelectChangeEvent) => handleFrontendRegionChange(e)}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
                             {regionArray.map((env, index) => {
                                 return <MenuItem key={index} value={env.Code}>{env.Name}</MenuItem>
@@ -156,7 +165,7 @@ function Bolt() {
                 <Box >
                     <FormControl sx={{ m: 1, width:90 }} variant="standard">
                         <InputLabel>Jenkins Job</InputLabel>
-                        <Select size="small" id="jenkinsSelect" defaultValue={jenkinsJobsArray[0].Code} onChange={(e: SelectChangeEvent) => handleJenkinsJobChange(e)}
+                        <Select size="small" id="jenkinsSelect" defaultValue={jenkinsJob} onChange={(e: SelectChangeEvent) => handleJenkinsJobChange(e)}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
                             {jenkinsJobsArray.map((env, index) => {
                                 return <MenuItem key={index} value={env.Code}>{env.Name}</MenuItem>
@@ -165,7 +174,7 @@ function Bolt() {
                     </FormControl>
                     <FormControl sx={{ m: 1, width:90 }} variant="standard">
                         <InputLabel>Environment</InputLabel>
-                        <Select size="small" id="projectSelect" defaultValue={environmentArray[0].Jenkins} onChange={(e: SelectChangeEvent) => handleJenkinsEnvironmentChange(e)}
+                        <Select size="small" id="projectSelect" defaultValue={jenkinsEnvironment} onChange={(e: SelectChangeEvent) => handleJenkinsEnvironmentChange(e)}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
                             {environmentArray.map((env, index) => {
                                 return <MenuItem key={index} value={env.Jenkins}>{env.Name}</MenuItem>
@@ -174,7 +183,7 @@ function Bolt() {
                     </FormControl >
                     <FormControl sx={{ m: 1, width:90 }} variant="standard">
                         <InputLabel>Region</InputLabel>
-                        <Select size="small" id="regionSelect" defaultValue={regionArray[0].Jenkins} onChange={(e: SelectChangeEvent) => handleJenkinsRegionChange(e)}
+                        <Select size="small" id="regionSelect" defaultValue={jenkinsRegion} onChange={(e: SelectChangeEvent) => handleJenkinsRegionChange(e)}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
                             {regionArray.map((env, index) => {
                                 return <MenuItem key={index} value={env.Jenkins}>{env.Name}</MenuItem>
@@ -184,10 +193,14 @@ function Bolt() {
                     <Button onClick={jenkinsGoButton}> Go </Button>
                 </Box>
             </TabPanel>
+            {/*Rundeck panel*/}
             <TabPanel value={value} index={2}>
                 Rundecks
             </TabPanel>
         </Box>
+            {/*User Feedback panel*/}
+            <p>{boltFeedback}</p>
+</div>
     );
 }
 export default Bolt;
