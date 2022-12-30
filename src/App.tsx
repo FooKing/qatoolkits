@@ -11,6 +11,7 @@ import ColourSelector from "./ColourSelector";
 import Bolt from "./Bolt";
 import DebugCommands from "./DebugCommands";
 import ThreeDDownloader from "./ThreeDDownloader";
+import JsonTools from "./JsonTools";
 
 
 function App() {
@@ -171,7 +172,7 @@ function App() {
               </AccordionSummary>
               <AccordionDetails>
                   <Typography>
-                      Json Tools here
+                      <JsonTools></JsonTools>
                   </Typography>
               </AccordionDetails>
           </Accordion>

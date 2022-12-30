@@ -61,18 +61,12 @@ function Bolt() {
     const handleEnvironmentChange = (e:SelectChangeEvent) => setEnvironment(e.target.value);
     const handleRegionChange = (e:SelectChangeEvent) => setRegion(e.target.value);
     const handleJenkinsChange = (e:SelectChangeEvent) => setJenkinsJob(e.target.value);
-    const environmentArray = [
-        {Code: '', Name: "Live", Jenkins: "master"},
-        {Code: "project0.", Name: "Project 0", Jenkins: "project0"},
-        {Code: "project1.", Name: "Project 1", Jenkins: "project1"},
-        {Code: "project2.", Name: "Project 2", Jenkins: "project2"},
-        {Code: "project3.", Name: "Project 3", Jenkins: "project3"},
-        {Code: "project4.", Name: "Project 4", Jenkins: "project4"},
-        {Code: "project5.", Name: "Project 5", Jenkins: "project5"},
-        {Code: "project6.", Name: "Project 6", Jenkins: "project6"},
-        {Code: "project7.", Name: "Project 7", Jenkins: "project7"},
-        {Code: "project8.", Name: "Project 8", Jenkins: "project8"}
-    ];
+    const environmentArray = Array(9).fill( 9).map((_, i) => {
+        console.log(`${i}`)
+        return {Code: `project${i}.`, Name: `Project ${i}`, Jenkins: `project${i}`}
+    })
+    // Put Live at the front so that it appears first
+    environmentArray.unshift({Code: ' ', Name: "Live", Jenkins: "master"})
 
     const regionArray = [
         {Code: 'com', Name: "UK", Jenkins: 'build-gb'},
