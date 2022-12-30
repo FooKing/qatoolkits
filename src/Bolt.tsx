@@ -59,14 +59,14 @@ function Bolt() {
     ];
 
     const jenkinsJobsArray = [
-        {Code: 'planner3d-gameci-native/', Name: "Planner3D Mac"},
-        {Code: "planner3d-gameci-native-windows/", Name: "Planner3D Win"},
-        {Code: "planner3d-assets-gameci", Name: "Planner3D Assets"},
-        {Code: "planner3d-light-atlasser-vr2", Name: "Planner3D Light Atlasser"},
-        {Code: "wrender-gameci-test", Name: "Planner3D HQ"},
-        {Code: "planner2d", Name: "Planner2D"},
-        {Code: "frontend/", Name: "Frontend"},
-        {Code: "feeder", Name: "Feeder"},
+        {Job: 'planner3d-gameci-native', Name: "Planner3D Mac"},
+        {Job: "planner3d-gameci-native-windows", Name: "Planner3D Win"},
+        {Job: "planner3d-assets-gameci", Name: "Planner3D Assets"},
+        {Job: "planner3d-light-atlasser-vr2", Name: "Planner3D Light Atlasser"},
+        {Job: "wrender-gameci-test", Name: "Planner3D HQ"},
+        {Job: "planner2d", Name: "Planner2D"},
+        {Job: "frontend", Name: "Frontend"},
+        {Job: "feeder", Name: "Feeder"},
     ];
     const [boltFeedback, setBoltFeedback] = useState('');
     const [value, setValue] = React.useState(0);
@@ -74,7 +74,7 @@ function Bolt() {
     const [frontendRegion, setFrontendRegion] = useState(regionArray[0].Code);
     const [jenkinsEnvironment, setJenkinsEnvironment] = useState(environmentArray[0].Jenkins);
     const [jenkinsRegion, setJenkinsRegion] = useState(regionArray[0].Jenkins);
-    const [jenkinsJob, setJenkinsJob] = useState(jenkinsJobsArray[0].Code);
+    const [jenkinsJob, setJenkinsJob] = useState(jenkinsJobsArray[0].Job);
     const handleFrontendEnvironmentChange = (e:SelectChangeEvent) => setFrontendEnvironment(e.target.value);
     const handleFrontendRegionChange = (e:SelectChangeEvent) => setFrontendRegion(e.target.value);
     const handleJenkinsEnvironmentChange = (e:SelectChangeEvent) => setJenkinsEnvironment(e.target.value);
@@ -165,10 +165,10 @@ function Bolt() {
                 <Box >
                     <FormControl sx={{ m: 1, width:90 }} variant="standard">
                         <InputLabel>Jenkins Job</InputLabel>
-                        <Select size="small" id="jenkinsSelect" defaultValue={jenkinsJob} onChange={(e: SelectChangeEvent) => handleJenkinsJobChange(e)}
+                        <Select size="small" id="jenkinsSelect" defaultValue={jenkinsJob} onChange={handleJenkinsJobChange}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
                             {jenkinsJobsArray.map((env, index) => {
-                                return <MenuItem key={index} value={env.Code}>{env.Name}</MenuItem>
+                                return <MenuItem key={index} value={env.Job}>{env.Name}</MenuItem>
                             })}
                         </Select>
                     </FormControl>
