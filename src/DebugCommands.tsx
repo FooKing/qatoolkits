@@ -40,7 +40,7 @@ function DebugCommands() {
 
 
     return (
-        <Box sx={{width:350}}>
+        <Box sx={{width:350 , display: 'grid', gap:1}}>
             <Accordion sx={{width:350, border: 1,borderRadius: 1, gap:5}} expanded={expanded === '3DTours'} onChange={handleChange('3DTours')}>
                 <AccordionSummary aria-controls="3DTours-content" id="3DTours-header">
                     <Typography fontSize={18} fontWeight={"semi bold"} >3D Tours</Typography>
