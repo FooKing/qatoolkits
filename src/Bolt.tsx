@@ -49,20 +49,8 @@ function populateTabs(index: number) {
 
 
 function Bolt() {
-    const [value, setValue] = React.useState(0);
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-    };
-
-    const [environment, setEnvironment] = useState('');
-    const [region, setRegion] = useState('');
-    const [jenkinsJob, setJenkinsJob] = useState('');
-
-    const handleEnvironmentChange = (e:SelectChangeEvent) => setEnvironment(e.target.value);
-    const handleRegionChange = (e:SelectChangeEvent) => setRegion(e.target.value);
-    const handleJenkinsChange = (e:SelectChangeEvent) => setJenkinsJob(e.target.value);
+    //setup arrays first, then they can be used for initial values.
     const environmentArray = Array(9).fill( 9).map((_, i) => {
-        console.log(`${i}`)
         return {Code: `project${i}.`, Name: `Project ${i}`, Jenkins: `project${i}`}
     })
     // Put Live at the front so that it appears first
@@ -84,15 +72,32 @@ function Bolt() {
         {Code: "feeder", Name: "Feeder"},
     ];
 
+    const [value, setValue] = React.useState(0);
+    const [frontendEnvironment, setFrontendEnvironment] = useState(environmentArray[0].Code);
+    const [frontendRegion, setFrontendRegion] = useState(regionArray[0].Code);
+    const [jenkinsEnvironment, setJenkinsEnvironment] = useState(environmentArray[0].Jenkins);
+    const [jenkinsRegion, setJenkinsRegion] = useState(regionArray[0].Jenkins);
+    const [jenkinsJob, setJenkinsJob] = useState(jenkinsJobsArray[0].Code);
+    const handleFrontendEnvironmentChange = (e:SelectChangeEvent) => setFrontendEnvironment(e.target.value);
+    const handleFrontendRegionChange = (e:SelectChangeEvent) => setFrontendRegion(e.target.value);
+    const handleJenkinsEnvironmentChange = (e:SelectChangeEvent) => setJenkinsEnvironment(e.target.value);
+    const handleJenkinsRegionChange = (e:SelectChangeEvent) => setJenkinsRegion(e.target.value);
+    const handleJenkinsJobChange = (e:SelectChangeEvent) => setJenkinsJob(e.target.value);
+    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+        setValue(newValue);
+    };
+
+
+
     function frontendGoButton() {
-        let currentUrl = "Https://frontend."+environment+"wrenkitchens."+region;
+        let currentUrl = "Https://frontend."+frontendEnvironment+"wrenkitchens."+frontendRegion;
         console.log(currentUrl.replace(/\s+/g, ''));
         window.open((currentUrl.replace(/\s+/g, '')));
     }
 
 
     async function jenkinsGoButton() {
-        let jenkinsUrl = `https://jenkins.wrenkitchens.com/job/${jenkinsJob}/job/${region}/job/${environment}/`;
+        let jenkinsUrl = `https://jenkins.wrenkitchens.com/job/${jenkinsJob}/job/${jenkinsRegion}/job/${jenkinsEnvironment}/`;
 
         try {
             const response = await fetch(jenkinsUrl);
@@ -100,7 +105,7 @@ function Bolt() {
                 window.open(jenkinsUrl)
             }
             else{
-                jenkinsUrl = `https://jenkins.wrenkitchens.com/job/${jenkinsJob}/job/build-gb/job/${environment}/`;
+                jenkinsUrl = `https://jenkins.wrenkitchens.com/job/${jenkinsJob}/job/build-gb/job/${jenkinsEnvironment}/`;
                 window.open(jenkinsUrl)
             }
         } catch (error) {
@@ -122,55 +127,57 @@ function Bolt() {
                 <Tab label="Jenkins" {...populateTabs(1)} />
                 <Tab label="Rundeck" {...populateTabs(2)} />
             </Tabs>
+            {/*Frontend Panel*/}
             <TabPanel value={value} index={0}>
                 <Box >
                    <FormControl sx={{ m: 1, width:90 }} variant="standard">
                        <InputLabel>Environment</InputLabel>
-                        <Select size="small" id="projectSelect" onChange={handleEnvironmentChange}
+                        <Select size="small" id="projectSelect" defaultValue={environmentArray[0].Code} onChange={(e: SelectChangeEvent) => handleFrontendEnvironmentChange(e)}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
-                            {environmentArray.map(({Code, Name},index ) => {
-                                return <MenuItem key={index} value={Code}>{Name}</MenuItem>
+                            {environmentArray.map((env, index) => {
+                                return <MenuItem key={index} value={env.Code}>{env.Name}</MenuItem>
                             })}
                         </Select>
                    </FormControl >
                     <FormControl sx={{ m: 1, width:90 }} variant="standard">
                         <InputLabel>Region</InputLabel>
-                        <Select size="small" id="regionSelect" onChange={handleRegionChange}
+                        <Select size="small" id="regionSelect" defaultValue={regionArray[0].Code} onChange={(e: SelectChangeEvent) => handleFrontendRegionChange(e)}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
-                            {regionArray.map(({Code, Name},index ) => {
-                                return <MenuItem key={index} value={Code}>{Name}</MenuItem>
+                            {regionArray.map((env, index) => {
+                                return <MenuItem key={index} value={env.Code}>{env.Name}</MenuItem>
                             })}
                         </Select>
                     </FormControl>
                 <Button onClick={frontendGoButton}> Go </Button>
                 </Box>
             </TabPanel>
+            {/*Jenkins panel*/}
             <TabPanel value={value} index={1}>
                 <Box >
                     <FormControl sx={{ m: 1, width:90 }} variant="standard">
                         <InputLabel>Jenkins Job</InputLabel>
-                        <Select size="small" id="regionSelect" onChange={handleJenkinsChange}
+                        <Select size="small" id="jenkinsSelect" defaultValue={jenkinsJobsArray[0].Code} onChange={(e: SelectChangeEvent) => handleJenkinsJobChange(e)}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
-                            {jenkinsJobsArray.map(({Code, Name},index ) => {
-                                return <MenuItem key={index} value={Code}>{Name}</MenuItem>
+                            {jenkinsJobsArray.map((env, index) => {
+                                return <MenuItem key={index} value={env.Code}>{env.Name}</MenuItem>
                             })}
                         </Select>
                     </FormControl>
                     <FormControl sx={{ m: 1, width:90 }} variant="standard">
                         <InputLabel>Environment</InputLabel>
-                        <Select size="small" id="projectSelect" onChange={handleEnvironmentChange}
+                        <Select size="small" id="projectSelect" defaultValue={environmentArray[0].Jenkins} onChange={(e: SelectChangeEvent) => handleJenkinsEnvironmentChange(e)}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
-                            {environmentArray.map(({Jenkins, Name},index ) => {
-                                return <MenuItem key={index} value={Jenkins}>{Name}</MenuItem>
+                            {environmentArray.map((env, index) => {
+                                return <MenuItem key={index} value={env.Jenkins}>{env.Name}</MenuItem>
                             })}
                         </Select>
                     </FormControl >
                     <FormControl sx={{ m: 1, width:90 }} variant="standard">
                         <InputLabel>Region</InputLabel>
-                        <Select size="small" id="regionSelect" onChange={handleRegionChange}
+                        <Select size="small" id="regionSelect" defaultValue={regionArray[0].Jenkins} onChange={(e: SelectChangeEvent) => handleJenkinsRegionChange(e)}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
-                            {regionArray.map(({Jenkins, Name},index ) => {
-                                return <MenuItem key={index} value={Jenkins}>{Name}</MenuItem>
+                            {regionArray.map((env, index) => {
+                                return <MenuItem key={index} value={env.Jenkins}>{env.Name}</MenuItem>
                             })}
                         </Select>
                     </FormControl>
