@@ -9,7 +9,7 @@ import {
     Tabs,
     Typography
 } from "@mui/material";
-import React, {useState} from "react";
+import React, {useState, useCallback} from "react";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -85,13 +85,13 @@ function Bolt() {
     };
 
     async function frontendGoButton() {
-        let frontendUrl = "Https://frontend." + frontendEnvironment + "wrenkitchens." + frontendRegion;
+        let frontendUrl = `Https://frontend.${frontendEnvironment}wrenkitchens.${frontendRegion}`.replace(/\s+/g, '');
         setBoltFeedback(``);
         try {
             const response = await fetch(frontendUrl);
             if (response.ok) {
-                console.log(frontendUrl.replace(/\s+/g, ''));
-                window.open((frontendUrl.replace(/\s+/g, '')));
+                console.log(frontendUrl);
+                window.open(frontendUrl);
             } else {
 
             }
@@ -143,8 +143,8 @@ function Bolt() {
                        <InputLabel>Environment</InputLabel>
                         <Select size="small" id="projectSelect" defaultValue={frontendEnvironment} onChange={(e: SelectChangeEvent) => handleFrontendEnvironmentChange(e)}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
-                            {environmentArray.map((env, index) => {
-                                return <MenuItem key={index} value={env.Code}>{env.Name}</MenuItem>
+                            {environmentArray.map((item, index) => {
+                                return <MenuItem key={index} value={item.Code}>{item.Name}</MenuItem>
                             })}
                         </Select>
                    </FormControl >
@@ -152,8 +152,8 @@ function Bolt() {
                         <InputLabel>Region</InputLabel>
                         <Select size="small" id="regionSelect" defaultValue={frontendRegion} onChange={(e: SelectChangeEvent) => handleFrontendRegionChange(e)}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
-                            {regionArray.map((env, index) => {
-                                return <MenuItem key={index} value={env.Code}>{env.Name}</MenuItem>
+                            {regionArray.map((item, index) => {
+                                return <MenuItem key={index} value={item.Code}>{item.Name}</MenuItem>
                             })}
                         </Select>
                     </FormControl>
@@ -167,8 +167,8 @@ function Bolt() {
                         <InputLabel>Jenkins Job</InputLabel>
                         <Select size="small" id="jenkinsSelect" defaultValue={jenkinsJob} onChange={handleJenkinsJobChange}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
-                            {jenkinsJobsArray.map((env, index) => {
-                                return <MenuItem key={index} value={env.Job}>{env.Name}</MenuItem>
+                            {jenkinsJobsArray.map((item, index) => {
+                                return <MenuItem key={index} value={item.Job}>{item.Name}</MenuItem>
                             })}
                         </Select>
                     </FormControl>
@@ -176,8 +176,8 @@ function Bolt() {
                         <InputLabel>Environment</InputLabel>
                         <Select size="small" id="projectSelect" defaultValue={jenkinsEnvironment} onChange={(e: SelectChangeEvent) => handleJenkinsEnvironmentChange(e)}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
-                            {environmentArray.map((env, index) => {
-                                return <MenuItem key={index} value={env.Jenkins}>{env.Name}</MenuItem>
+                            {environmentArray.map((item, index) => {
+                                return <MenuItem key={index} value={item.Jenkins}>{item.Name}</MenuItem>
                             })}
                         </Select>
                     </FormControl >
@@ -185,8 +185,8 @@ function Bolt() {
                         <InputLabel>Region</InputLabel>
                         <Select size="small" id="regionSelect" defaultValue={jenkinsRegion} onChange={(e: SelectChangeEvent) => handleJenkinsRegionChange(e)}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
-                            {regionArray.map((env, index) => {
-                                return <MenuItem key={index} value={env.Jenkins}>{env.Name}</MenuItem>
+                            {regionArray.map((item, index) => {
+                                return <MenuItem key={index} value={item.Jenkins}>{item.Name}</MenuItem>
                             })}
                         </Select>
                     </FormControl>
