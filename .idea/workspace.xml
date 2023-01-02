@@ -5,27 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b9e7239-1912-4b06-b7d4-c19c9b5ac9ed" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/public/options/options.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/options/options.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Icons/optionsIcon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fonts/barlow-v12-latin-500.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fonts/barlow-v12-latin-500.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fonts/barlow-v12-latin-600.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fonts/barlow-v12-latin-600.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fonts/barlow-v12-latin-700.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fonts/barlow-v12-latin-700.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fonts/barlow-v12-latin-800.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fonts/barlow-v12-latin-800.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fonts/barlow-v12-latin-900.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fonts/barlow-v12-latin-900.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fonts/barlow-v12-latin-regular.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fonts/barlow-v12-latin-regular.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/options.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/options/options.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/options/options.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/options.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Bolt.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bolt.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ThreeDDownloader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ThreeDDownloader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JsonTools.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/JsonTools.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,10 +73,10 @@
       <recent name="C:\Users\skage\OneDrive\Desktop\qatoolkits\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\skage\OneDrive\Desktop\qatoolkits\public" />
+      <recent name="C:\Users\skage\OneDrive\Desktop\qatoolkits\src" />
       <recent name="C:\Users\skage\OneDrive\Desktop\qatoolkits\src\Icons" />
       <recent name="C:\Users\skage\OneDrive\Desktop\qatoolkits\src\fonts" />
-      <recent name="C:\Users\skage\OneDrive\Desktop\qatoolkits\src" />
-      <recent name="C:\Users\skage\OneDrive\Desktop\qatoolkits\public" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -132,7 +118,7 @@
       <workItem from="1672299460289" duration="20105000" />
       <workItem from="1672423432603" duration="12975000" />
       <workItem from="1672482865089" duration="3890000" />
-      <workItem from="1672649985556" duration="33052000" />
+      <workItem from="1672649985556" duration="33968000" />
     </task>
     <servers />
   </component>

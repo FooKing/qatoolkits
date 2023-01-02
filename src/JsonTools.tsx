@@ -1,9 +1,7 @@
 import React from "react";
 import {Box, Button} from "@mui/material";
 import {browser} from "webextension-polyfill-ts";
-import {kMaxLength} from "buffer";
 import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 
 function JsonTools() {
 
@@ -28,7 +26,6 @@ function JsonTools() {
     }
 
     async function handleGetPlanImages() {
-        //https://feeder.project6.wrenkitchens.com/plan/read-plan-json/51023076-2022-12-30-10-02-54.json
         let clipText = await navigator.clipboard.readText()
         console.log(clipText);
         if(clipText.startsWith("https://feeder")) {

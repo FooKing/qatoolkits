@@ -2,7 +2,7 @@ import {
     Accordion,
     AccordionDetails,
     AccordionSummary, Box, Button,
-    createTheme, CssBaseline, Icon, IconButton, ThemeOptions,
+    createTheme, CssBaseline, Icon,
     ThemeProvider,
     Typography,
 } from '@mui/material';
@@ -79,13 +79,6 @@ function App() {
         }
     });
 
-
-    const configIcon = (
-        <Icon fontSize="small">
-            <img alt="options" src="./Icons/optionsIcon.svg" />
-        </Icon>
-    );
-
     const [expanded, setExpanded] = React.useState<string | false>('panel1');
     const handleChange =
         (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
@@ -148,7 +141,7 @@ function App() {
           </Accordion>
           <Box display="flex" justifyContent="right" alignItems="flex-end" bottom="0" >
             <Button sx={{width: 30, height: 40}} onClick={handleOptionsButton}>
-                <img height="25px" src={optionsIcon}/>
+                <img alt="Options" height="25px" src={optionsIcon}/>
             </Button>
           </Box>
       </ThemeProvider>
