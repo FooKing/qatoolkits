@@ -10,6 +10,7 @@ import {
     Typography
 } from "@mui/material";
 import React, {useState, useCallback} from "react";
+import {browser} from "webextension-polyfill-ts";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -83,10 +84,25 @@ function Bolt() {
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
-
+    async function updateFeedback(message:string)
+    {
+        // Reset message delay
+        let timer = 2;
+        setBoltFeedback(``);
+        setBoltFeedback(message);
+        // Setup a timer and reset message
+        const timerID = setInterval(async () => {
+            if (timer > 0 ){
+                timer--;
+            }
+            else {
+                clearInterval(timerID);
+                setBoltFeedback(``);
+            }
+            },500);
+    }
     async function frontendGoButton() {
         let frontendUrl = `Https://frontend.${frontendEnvironment}wrenkitchens.${frontendRegion}`.replace(/\s+/g, '');
-        setBoltFeedback(``);
         try {
             const response = await fetch(frontendUrl);
             if (response.ok) {
@@ -97,27 +113,25 @@ function Bolt() {
             }
         } catch (error) {
             console.log(error)
-            setBoltFeedback(`${error}`);
+            await updateFeedback(`${error}`);
         }
     }
 
     async function jenkinsGoButton() {
         let jenkinsUrl = `https://jenkins.wrenkitchens.com/job/${jenkinsJob}/job/${jenkinsRegion}/job/${jenkinsEnvironment}/`;
-        setBoltFeedback(``);
         try {
             const response = await fetch(jenkinsUrl);
             if (response.ok){
-                setBoltFeedback(``)
                 window.open(jenkinsUrl)
             }
             else{
                 jenkinsUrl = `https://jenkins.wrenkitchens.com/job/${jenkinsJob}/job/build-gb/job/${jenkinsEnvironment}/`;
                 window.open(jenkinsUrl)
-                setBoltFeedback("Url unreachable, check you're on internal network and VPN connection")
+                await updateFeedback("Url unreachable, check you're on internal network and VPN connection")
             }
         } catch (error) {
             console.log(error)
-            setBoltFeedback(`${error}`);
+            await updateFeedback(`${error}`);
         }
     }
 

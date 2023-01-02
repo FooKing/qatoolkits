@@ -1,18 +1,27 @@
-import {Box,Button,FormControl,Input,InputLabel,MenuItem,Select,SelectChangeEvent}
+import {Box,Button,FormControl,Input,InputLabel,MenuItem,Select,SelectChangeEvent, LinearProgress}
     from "@mui/material";
 import React, {useState}
     from "react";
-import {browser,}
+import {browser, Downloads,}
     from "webextension-polyfill-ts";
+import {green} from "@mui/material/colors";
+import {Console} from "inspector";
 
 
 function ThreeDDownloader() {
     const [isDownloading, setIsDownloading] = useState(false);
+    const [downloadPercent, setDownloadPercent] = useState(Number);
+    const [hideDownloadBar, setHideDownloadBar] =  React.useState<'inherit' | 'none'>('none');
+    const [downloadColour, setDownloadColour] =  React.useState<'primary' | 'success' | 'error'>('primary');
     const [isLatest, setIsLatest] = useState(true);
     const [customVersion, setCustomVersion] = useState('');
     const [environment, setEnvironment] = useState('');
     const [staticLocation, setStaticLocation] = useState('static');
     const [currentPlatform, setCurrentPlatform] = useState('gameCI');
+    let timerRunning = false;
+    const timerDefault = 10;
+    let timer = timerDefault;
+
     const handleVersionChange = (e:React.ChangeEvent<HTMLInputElement>) => setCustomVersion(e.target.value);
     const handleEnvironmentChange = (e:SelectChangeEvent) => {
         setEnvironment(e.target.value);
@@ -40,6 +49,7 @@ function ThreeDDownloader() {
 
     const handleDownloadButton = async () => {
         let currentDownloadUrl = "";
+
         if (isLatest) {
             const requestUrl = new XMLHttpRequest();
             const versionCheckUrl = `https://${staticLocation}.wrenkitchens.com/planner3d/${currentPlatform}/${environment}version.txt`.replace(/\s+/g,'');
@@ -89,31 +99,62 @@ function ThreeDDownloader() {
             console.log(downloadUrl);
         });
     }
+
+    function updateFeedback(message: string) {
+        console.log("UpdateFeedback called");
+        setUserFeedbackMessage(message);
+
+        // Check if the interval has already been set
+        if (timerRunning) {
+            // If the interval has already been set, just reset the timer
+            timer = timerDefault;
+        } else {
+            // If the interval has not been set, set it up and reset the message
+           const timerID = setInterval(() => {
+               timerRunning = true;
+                if (timer > 0) {
+                    timer--;
+                } else {
+                    console.log(timer);
+                    clearInterval(timerID);
+                    setHideDownloadBar("none");
+                    setUserFeedbackMessage("");
+                    timerRunning = false;
+                }
+            }, 250);
+        }
+    }
     async function trackDownloadProgress(downloadItem: number) {
         const id = setInterval(async () => {
             const downloads = await browser.downloads.search({id: (downloadItem)});
             const download = downloads[0];
+            let downloadPercent = Math.round((download.bytesReceived / download.totalBytes) * 100);
             switch (download.state) {
                 case 'complete':
-                    setUserFeedbackMessage(`Download complete`);
+                    updateFeedback(`Download complete`);
                     clearInterval(id);
+                    setDownloadPercent(100);
                     setIsDownloading(false);
+                    setDownloadColour('success')
                     break;
                 case 'interrupted':
-                    setUserFeedbackMessage(`Download failed`);
+                    updateFeedback(`Download failed`);
                     clearInterval(id);
                     setIsDownloading(false);
+                    setDownloadColour('error')
                     break;
                 case 'in_progress':
-                    let downloadPercent = Math.round((download.bytesReceived / download.totalBytes) * 100);
-                    setUserFeedbackMessage(`Downloading ${downloadPercent}% complete`);
+                    setHideDownloadBar('inherit');
+                    setDownloadColour('primary')
+                    setDownloadPercent(downloadPercent);
+                    updateFeedback(`Downloading`);
                     break;
             }
-        }, 500);
+        }, 250);
     }
 
     return (
-        <Box title='3D downloader' sx={{ flexGrow: 1, height: 200, width:300, borderRadius:1, border:1, padding:"5px"}}>
+        <Box title='3D downloader' sx={{ flexGrow: 1, width:300, borderRadius:1, border:1, padding:"5px"}}>
             <FormControl sx={{ m: 1, width:90 }} variant="standard">
                 <InputLabel>Platform</InputLabel>
                 <Select size="small" id="LatestSelect" defaultValue={'gameCI'} onChange={handlePlatformChange}>
@@ -144,6 +185,7 @@ function ThreeDDownloader() {
                 <Button  sx={{ m: 1, alignItems:"center"}} size="small" variant="contained" onClick={handleDownloadButton} disabled={isDownloading}> Download </Button>
                 <Button  sx={{ m: 1, alignItems:"center"}} size="small" variant="contained" onClick={handleDownloadManifestButton} disabled={isDownloading}> Manifest Download </Button>
                 <p>{userFeedbackMessage}</p>
+                <LinearProgress variant="determinate" color={downloadColour} style={{display:hideDownloadBar}} value={downloadPercent}></LinearProgress>
         </Box>
     );
 }
