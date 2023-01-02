@@ -11,27 +11,7 @@ let timerCount = timerDefault;
 let feedbackLoopRunning = false;
 
 function ThreeDDownloader() {
-    const [isDownloading, setIsDownloading] = useState(false);
-    const [downloadPercent, setDownloadPercent] = useState(Number);
-    const [hideDownloadBar, setHideDownloadBar] =  React.useState<'inherit' | 'none'>('none');
-    const [downloadColour, setDownloadColour] =  React.useState<'primary' | 'success' | 'error'>('primary');
-    const [isLatest, setIsLatest] = useState(true);
-    const [customVersion, setCustomVersion] = useState('');
-    const [environment, setEnvironment] = useState('');
-    const [staticLocation, setStaticLocation] = useState('static');
-    const [currentPlatform, setCurrentPlatform] = useState('gameCI');
-
-    const handleVersionChange = (e:React.ChangeEvent<HTMLInputElement>) => setCustomVersion(e.target.value);
-    const handleEnvironmentChange = (e:SelectChangeEvent) => {
-        setEnvironment(e.target.value);
-        const currentEnvironment = enviroArray.find(env => env.Code === e.target.value);
-        if (currentEnvironment) {
-            setStaticLocation(currentEnvironment.Static);
-        }
-
-    };
-    let [userFeedbackMessage, setUserFeedbackMessage] = useState('');
-
+// setup arrays first then they can be used for initial values
     const enviroArray = [
         {Code: " ", Name: "Live", Static: "static"},
         {Code: "project0/", Name: "Project 0", Static: "project-static"},
@@ -45,6 +25,25 @@ function ThreeDDownloader() {
         {Code: "project8/", Name: "Project 8", Static: "project-static"}
 
     ];
+    const [isDownloading, setIsDownloading] = useState(false);
+    const [downloadPercent, setDownloadPercent] = useState(Number);
+    const [hideDownloadBar, setHideDownloadBar] =  React.useState<'inherit' | 'none'>('none');
+    const [downloadColour, setDownloadColour] =  React.useState<'primary' | 'success' | 'error'>('primary');
+    const [isLatest, setIsLatest] = useState(true);
+    const [customVersion, setCustomVersion] = useState('');
+    const [environment, setEnvironment] = useState(enviroArray[0].Code);
+    const [staticLocation, setStaticLocation] = useState('static');
+    const [currentPlatform, setCurrentPlatform] = useState('gameCI');
+    const [userFeedbackMessage, setUserFeedbackMessage] = useState('');
+    const handleVersionChange = (e:React.ChangeEvent<HTMLInputElement>) => setCustomVersion(e.target.value);
+    const handleEnvironmentChange = (e:SelectChangeEvent) => {
+        setEnvironment(e.target.value);
+        const currentEnvironment = enviroArray.find(env => env.Code === e.target.value);
+        if (currentEnvironment) {
+            setStaticLocation(currentEnvironment.Static);
+        }
+    };
+
     // loop delays.
     async function delay(ms: number) {
         return new Promise(resolve => setTimeout(resolve, ms));
@@ -126,21 +125,22 @@ function ThreeDDownloader() {
         }
     }
     async function trackDownloadProgress(downloadItem: number) {
-        const id = setInterval(async () => {
+        let downloadComplete = false;
+        while (!downloadComplete) {
             const downloads = await browser.downloads.search({id: (downloadItem)});
             const download = downloads[0];
             let downloadPercent = Math.round((download.bytesReceived / download.totalBytes) * 100);
             switch (download.state) {
                 case 'complete':
-                    await updateFeedback(`Download complete`);
-                    clearInterval(id);
+                    downloadComplete = true;
+                    updateFeedback(`Download complete`);
                     setDownloadPercent(100);
                     setIsDownloading(false);
                     setDownloadColour('success')
                     break;
                 case 'interrupted':
-                    await updateFeedback(`Download failed`);
-                    clearInterval(id);
+                    downloadComplete = true;
+                    updateFeedback(`Download failed`);
                     setIsDownloading(false);
                     setDownloadColour('error')
                     break;
@@ -148,10 +148,12 @@ function ThreeDDownloader() {
                     setHideDownloadBar('inherit');
                     setDownloadColour('primary')
                     setDownloadPercent(downloadPercent);
-                    await updateFeedback(`Downloading`);
-                    break;
+                    updateFeedback(`Downloading`);
             }
-        }, 250);
+
+            // Delay for 250 milliseconds before checking the download status again
+            await delay(250);
+        }
     }
 
     return (
