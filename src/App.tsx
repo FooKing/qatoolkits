@@ -1,8 +1,8 @@
 import {
     Accordion,
     AccordionDetails,
-    AccordionSummary,
-    createTheme, CssBaseline,
+    AccordionSummary, Box, Button,
+    createTheme, CssBaseline, Icon, IconButton, ThemeOptions,
     ThemeProvider,
     Typography,
 } from '@mui/material';
@@ -12,10 +12,12 @@ import Bolt from "./Bolt";
 import DebugCommands from "./DebugCommands";
 import ThreeDDownloader from "./ThreeDDownloader";
 import JsonTools from "./JsonTools";
+import optionsIcon from "./Icons/optionsIcon.svg"
+import {browser} from "webextension-polyfill-ts";
 
 
 function App() {
-    const darkTheme = createTheme({
+    const lightTheme = createTheme({
         palette: {
             action: {
                 active: '#6B7280',
@@ -73,82 +75,30 @@ function App() {
             }
         },
         typography: {
-            button: {
-                fontWeight: 600
-            },
-            fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
-            body1: {
-                fontSize: '1rem',
-                fontWeight: 400,
-                lineHeight: 1.5
-            },
-            body2: {
-                fontSize: '0.875rem',
-                fontWeight: 400,
-                lineHeight: 1.57
-            },
-            subtitle1: {
-                fontSize: '1rem',
-                fontWeight: 500,
-                lineHeight: 1.75
-            },
-            subtitle2: {
-                fontSize: '0.875rem',
-                fontWeight: 500,
-                lineHeight: 1.57
-            },
-            overline: {
-                fontSize: '0.75rem',
-                fontWeight: 600,
-                letterSpacing: '0.5px',
-                lineHeight: 2.5,
-                textTransform: 'uppercase'
-            },
-            caption: {
-                fontSize: '0.75rem',
-                fontWeight: 400,
-                lineHeight: 1.66
-            },
-            h1: {
-                fontWeight: 700,
-                fontSize: '3.5rem',
-                lineHeight: 1.375
-            },
-            h2: {
-                fontWeight: 700,
-                fontSize: '3rem',
-                lineHeight: 1.375
-            },
-            h3: {
-                fontWeight: 700,
-                fontSize: '2.25rem',
-                lineHeight: 1.375
-            },
-            h4: {
-                fontWeight: 700,
-                fontSize: '2rem',
-                lineHeight: 1.375
-            },
-            h5: {
-                fontWeight: 600,
-                fontSize: '1.5rem',
-                lineHeight: 1.375
-            },
-            h6: {
-                fontWeight: 600,
-                fontSize: '1.125rem',
-                lineHeight: 1.375
-            }
+            fontFamily: 'Barlow',
         }
     });
+
+
+    const configIcon = (
+        <Icon fontSize="small">
+            <img alt="options" src="./Icons/optionsIcon.svg" />
+        </Icon>
+    );
 
     const [expanded, setExpanded] = React.useState<string | false>('panel1');
     const handleChange =
         (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
             setExpanded(newExpanded ? panel : false);
         };
-  return (
-      <ThemeProvider theme={darkTheme}>
+
+    function handleOptionsButton() {
+        console.log("Open Options")
+        browser.runtime.openOptionsPage().then(r => {console.log(r)});
+    }
+
+    return (
+      <ThemeProvider theme={lightTheme}>
       <CssBaseline />
           <Accordion expanded={expanded === 'colourPicker'} onChange={handleChange('colourPicker')}>
               <AccordionSummary aria-controls="colourPicker-content" id="colourPicker-header">
@@ -196,6 +146,11 @@ function App() {
                   </Typography>
               </AccordionDetails>
           </Accordion>
+          <Box display="flex" justifyContent="right" alignItems="flex-end" bottom="0" >
+            <Button sx={{width: 30, height: 40}} onClick={handleOptionsButton}>
+                <img height="25px" src={optionsIcon}/>
+            </Button>
+          </Box>
       </ThemeProvider>
 
   );

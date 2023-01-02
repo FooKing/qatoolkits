@@ -16,5 +16,10 @@
   },
   "icons":{
     "96" : "logo.svg"
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "chrome_style": true,
+    "open_in_tab": true
   }
 }

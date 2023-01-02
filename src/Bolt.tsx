@@ -152,7 +152,7 @@ function Bolt() {
 
     return (
         <div>
-        <Box sx={{ flexGrow: 1, display: 'flex', height: 224,width: 350, borderRadius:1, border:1, padding:"5px"}}>
+        <Box sx={{ flexGrow: 1, display: 'flex',width:350,height:250, borderRadius:1, border:1, padding:"5px"}}>
             <Tabs
                 orientation="vertical"
                 variant="scrollable"
@@ -163,11 +163,12 @@ function Bolt() {
                 <Tab label="Frontend" {...populateTabs(0)} />
                 <Tab label="Jenkins" {...populateTabs(1)} />
                 <Tab label="Rundeck" {...populateTabs(2)} />
+
             </Tabs>
             {/*Frontend Panel*/}
             <TabPanel value={value} index={0}>
                 <Box >
-                   <FormControl sx={{ m: 1, width:90 }} variant="standard">
+                   <FormControl sx={{ m: 1,width:90 }} variant="standard">
                        <InputLabel>Environment</InputLabel>
                         <Select size="small" id="projectSelect" defaultValue={frontendEnvironment} onChange={(e: SelectChangeEvent) => handleFrontendEnvironmentChange(e)}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
@@ -185,7 +186,9 @@ function Bolt() {
                             })}
                         </Select>
                     </FormControl>
-                <Button onClick={frontendGoButton}> Go </Button>
+                    <Box  sx={{display: 'flex', justifyContent: 'right', paddingTop:"auto"}}>
+                        <Button  onClick={frontendGoButton} variant="contained" > Go </Button>
+                    </Box>
                 </Box>
             </TabPanel>
             {/*Jenkins panel*/}
@@ -218,7 +221,9 @@ function Bolt() {
                             })}
                         </Select>
                     </FormControl>
-                    <Button onClick={jenkinsGoButton}> Go </Button>
+                    <Box display="flex" justifyContent="right" >
+                    <Button onClick={jenkinsGoButton} variant="contained"> Go </Button>
+                    </Box>
                 </Box>
             </TabPanel>
             {/*Rundeck panel*/}

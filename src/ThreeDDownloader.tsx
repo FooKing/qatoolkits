@@ -11,7 +11,7 @@ let timerCount = timerDefault;
 let feedbackLoopRunning = false;
 
 function ThreeDDownloader() {
-// setup arrays first then they can be used for initial values
+// setup arrays first for initial values of hooks
     const enviroArray = [
         {Code: " ", Name: "Live", Static: "static"},
         {Code: "project0/", Name: "Project 0", Static: "project-static"},
@@ -157,15 +157,15 @@ function ThreeDDownloader() {
     }
 
     return (
-        <Box title='3D downloader' sx={{ flexGrow: 1, width:300, borderRadius:1, border:1, padding:"5px"}}>
-            <FormControl sx={{ m: 1, width:90 }} variant="standard">
+        <Box title='3D downloader' sx={{ flexGrow: 1, width:350, borderRadius:1, border:1, padding:"5px"}}>
+            <FormControl sx={{ m: 1,width:"40%" }} variant="standard">
                 <InputLabel>Platform</InputLabel>
                 <Select size="small" id="LatestSelect" defaultValue={'gameCI'} onChange={handlePlatformChange}>
                     <MenuItem value={'gameCI'}>Mac</MenuItem>
                     <MenuItem value={'gameci-windows'}>Win</MenuItem>
                 </Select>
             </FormControl>
-            <FormControl sx={{ m: 1, width:90 }} variant="standard">
+            <FormControl sx={{ m: 1,width:"40%" }} variant="standard">
                 <InputLabel>Environment</InputLabel>
                 <Select size="small" id="projectSelect" value={environment} onChange={handleEnvironmentChange}
                         MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
@@ -174,19 +174,19 @@ function ThreeDDownloader() {
                     })}
                 </Select>
             </FormControl >
-            <FormControl sx={{ m: 1, width:90 }} variant="standard">
+            <FormControl sx={{ m: 1,width:"40%" }} variant="standard">
                 <InputLabel>Version</InputLabel>
                 <Select size="small" id="LatestSelect" defaultValue={'true'} onChange={handleLatestChange}>
                     <MenuItem value={'true'}>Latest</MenuItem>
                     <MenuItem value={'false'}>Custom</MenuItem>
                 </Select>
                 </FormControl>
-            <FormControl sx={{ m: 1, width:90 }} variant="standard">
+            <FormControl sx={{ m: 1,width:"40%" }} variant="standard">
                 <InputLabel>Custom</InputLabel>
                 <Input type= "number" value={customVersion} disabled={isLatest} onChange={handleVersionChange}></Input>
             </FormControl>
-                <Button  sx={{ m: 1, alignItems:"center"}} size="small" variant="contained" onClick={handleDownloadButton} disabled={isDownloading}> Download </Button>
-                <Button  sx={{ m: 1, alignItems:"center"}} size="small" variant="contained" onClick={handleDownloadManifestButton} disabled={isDownloading}> Manifest Download </Button>
+                <Button  sx={{ m: 1, alignItems:"center", width:"40%"}} size="small" variant="contained" onClick={handleDownloadButton} disabled={isDownloading}> Download </Button>
+                <Button  sx={{ m: 1, alignItems:"center", width:"40%"}} size="small" variant="contained" onClick={handleDownloadManifestButton} disabled={isDownloading}> Manifest Download </Button>
                 <p>{userFeedbackMessage}</p>
                 <LinearProgress variant="determinate" color={downloadColour} style={{display:hideDownloadBar}} value={downloadPercent}></LinearProgress>
         </Box>
