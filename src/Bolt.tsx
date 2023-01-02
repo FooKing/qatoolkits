@@ -9,14 +9,18 @@ import {
     Tabs,
     Typography
 } from "@mui/material";
-import React, {useState, useCallback} from "react";
-import {browser} from "webextension-polyfill-ts";
+import React, {useState} from "react";
 
 interface TabPanelProps {
     children?: React.ReactNode;
     index: number;
     value: number;
 }
+
+//User feedback timer vars
+const timerDefault = 3;
+let timerCount = timerDefault;
+let feedbackLoopRunning = false;
 
 function TabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
@@ -84,23 +88,33 @@ function Bolt() {
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
+
+    //Loop delays
+    async function delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
     async function updateFeedback(message:string)
     {
-        // Reset message delay
-        let timer = 2;
-        setBoltFeedback(``);
-        setBoltFeedback(message);
-        // Setup a timer and reset message
-        const timerID = setInterval(async () => {
-            if (timer > 0 ){
-                timer--;
+        if (feedbackLoopRunning) {
+            // The loop is already running, reset counter and message but don't start a new loop.
+            timerCount = timerDefault;
+            setBoltFeedback(message);
+        }
+        else {
+            feedbackLoopRunning = true;
+            setBoltFeedback(message);
+
+            while (timerCount > 0) {
+                timerCount--;
+                await delay(1000);
             }
-            else {
-                clearInterval(timerID);
-                setBoltFeedback(``);
-            }
-            },500);
-    }
+            //Loop finished clear messages reset timer and loop status
+            feedbackLoopRunning = false;
+            setBoltFeedback('');
+            timerCount = timerDefault;
+        }
+     }
+
     async function frontendGoButton() {
         let frontendUrl = `Https://frontend.${frontendEnvironment}wrenkitchens.${frontendRegion}`.replace(/\s+/g, '');
         try {
@@ -127,11 +141,11 @@ function Bolt() {
             else{
                 jenkinsUrl = `https://jenkins.wrenkitchens.com/job/${jenkinsJob}/job/build-gb/job/${jenkinsEnvironment}/`;
                 window.open(jenkinsUrl)
-                await updateFeedback("Url unreachable, check you're on internal network and VPN connection")
+                 updateFeedback("Url unreachable, check you're on internal network and VPN connection")
             }
         } catch (error) {
-            console.log(error)
-            await updateFeedback(`${error}`);
+             console.log(error)
+             updateFeedback(`${error}`);
         }
     }
 

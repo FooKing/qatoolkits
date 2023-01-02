@@ -2,11 +2,13 @@ import {Box,Button,FormControl,Input,InputLabel,MenuItem,Select,SelectChangeEven
     from "@mui/material";
 import React, {useState}
     from "react";
-import {browser, Downloads,}
+import {browser,}
     from "webextension-polyfill-ts";
-import {green} from "@mui/material/colors";
-import {Console} from "inspector";
 
+// timer loop vars
+const timerDefault = 3;
+let timerCount = timerDefault;
+let feedbackLoopRunning = false;
 
 function ThreeDDownloader() {
     const [isDownloading, setIsDownloading] = useState(false);
@@ -18,9 +20,6 @@ function ThreeDDownloader() {
     const [environment, setEnvironment] = useState('');
     const [staticLocation, setStaticLocation] = useState('static');
     const [currentPlatform, setCurrentPlatform] = useState('gameCI');
-    let timerRunning = false;
-    const timerDefault = 10;
-    let timer = timerDefault;
 
     const handleVersionChange = (e:React.ChangeEvent<HTMLInputElement>) => setCustomVersion(e.target.value);
     const handleEnvironmentChange = (e:SelectChangeEvent) => {
@@ -46,6 +45,10 @@ function ThreeDDownloader() {
         {Code: "project8/", Name: "Project 8", Static: "project-static"}
 
     ];
+    // loop delays.
+    async function delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
     const handleDownloadButton = async () => {
         let currentDownloadUrl = "";
@@ -73,7 +76,6 @@ function ThreeDDownloader() {
     }
 
     const handleDownloadManifestButton = async () => {
-        //project-static.wrenkitchens.com/planner3d/assets/project4/2021.3.4f1/standaloneosx/standaloneosx.manifest
         const manifestUrl = `https://${staticLocation}.wrenkitchens.com/planner3d/assets/${environment}2021.3.4f1/standaloneosx/standaloneosx.manifest`.replace(/\s+/g,'');
         await handleDownload(manifestUrl, 'standaloneosx.manifest')
        };
@@ -100,28 +102,27 @@ function ThreeDDownloader() {
         });
     }
 
-    function updateFeedback(message: string) {
+    async function updateFeedback(message: string) {
         console.log("UpdateFeedback called");
         setUserFeedbackMessage(message);
 
-        // Check if the interval has already been set
-        if (timerRunning) {
-            // If the interval has already been set, just reset the timer
-            timer = timerDefault;
+        if (feedbackLoopRunning) {
+            // The loop is already running, reset counter and message but don't start a new loop.
+            timerCount = timerDefault;
+            setUserFeedbackMessage(message);
         } else {
-            // If the interval has not been set, set it up and reset the message
-           const timerID = setInterval(() => {
-               timerRunning = true;
-                if (timer > 0) {
-                    timer--;
-                } else {
-                    console.log(timer);
-                    clearInterval(timerID);
-                    setHideDownloadBar("none");
-                    setUserFeedbackMessage("");
-                    timerRunning = false;
-                }
-            }, 250);
+            feedbackLoopRunning = true;
+            setUserFeedbackMessage(message);
+
+            while (timerCount > 0) {
+                timerCount--;
+                await delay(1000);
+            }
+            //Loop finished clear messages reset timer and loop status
+            feedbackLoopRunning = false;
+            setUserFeedbackMessage('');
+            setHideDownloadBar("none");
+            timerCount = timerDefault;
         }
     }
     async function trackDownloadProgress(downloadItem: number) {
@@ -131,14 +132,14 @@ function ThreeDDownloader() {
             let downloadPercent = Math.round((download.bytesReceived / download.totalBytes) * 100);
             switch (download.state) {
                 case 'complete':
-                    updateFeedback(`Download complete`);
+                    await updateFeedback(`Download complete`);
                     clearInterval(id);
                     setDownloadPercent(100);
                     setIsDownloading(false);
                     setDownloadColour('success')
                     break;
                 case 'interrupted':
-                    updateFeedback(`Download failed`);
+                    await updateFeedback(`Download failed`);
                     clearInterval(id);
                     setIsDownloading(false);
                     setDownloadColour('error')
@@ -147,7 +148,7 @@ function ThreeDDownloader() {
                     setHideDownloadBar('inherit');
                     setDownloadColour('primary')
                     setDownloadPercent(downloadPercent);
-                    updateFeedback(`Downloading`);
+                    await updateFeedback(`Downloading`);
                     break;
             }
         }, 250);
