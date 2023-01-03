@@ -69,9 +69,16 @@ function Bolt() {
         {Job: "planner3d-assets-gameci", Name: "Planner3D Assets"},
         {Job: "planner3d-light-atlasser-vr2", Name: "Planner3D Light Atlasser"},
         {Job: "wrender-gameci-test", Name: "Planner3D HQ"},
+        {Job: "selenium-end-to-end-tests", Name: "Selenium Tests", Modfier:'build?delay=0sec'},
         {Job: "planner2d", Name: "Planner2D"},
         {Job: "frontend", Name: "Frontend"},
         {Job: "feeder", Name: "Feeder"},
+    ];
+//https://jenkins.wrenkitchens.com/job/selenium-end-to-end-tests/job/build-gb/job/project0/build?delay=0sec
+
+    const rundeckJobsArray =[
+        {JobUK:'f043b6c7-fe91-48c9-93fe-76d9fefbf32e', JobUS: '4903331f-02aa-4272-930e-6a3ba3495b87', Name:'Clear Redis' },
+        {JobUK:'1904f5bc-d485-419f-ba4e-a87d0b752c68', JobUS: '5fd464e6-bd70-4130-9fbf-a643d1376379', Name:'Refresh Elastic' }
     ];
     const [boltFeedback, setBoltFeedback] = useState('');
     const [value, setValue] = React.useState(0);
@@ -196,7 +203,7 @@ function Bolt() {
                 <Box >
                     <FormControl sx={{ m: 1, width:90 }} variant="standard">
                         <InputLabel>Jenkins Job</InputLabel>
-                        <Select size="small" id="jenkinsSelect" defaultValue={jenkinsJob} onChange={handleJenkinsJobChange}
+                        <Select size="small" id="jenkinsSelect" defaultValue={jenkinsJob} onChange={(e: SelectChangeEvent) => handleJenkinsJobChange(e)}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
                             {jenkinsJobsArray.map((item, index) => {
                                 return <MenuItem key={index} value={item.Job}>{item.Name}</MenuItem>
