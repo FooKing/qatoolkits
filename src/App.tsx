@@ -86,9 +86,17 @@ function App() {
         };
 
     function handleOptionsButton() {
-        console.log("Open Options")
-        browser.runtime.openOptionsPage().then(r => {console.log(r)});
-    }
+        // Test page
+        //https://www.hattons.co.uk/62640/gaugemaster_gmkd02_shop/stockdetail?srsltid=AeTuncp_pnqwGLGWCE_YtFpKgDyg6Q7J4FwTLCEko4IEE5mxtntLz0VK7VY
+        let newValue = 'Somthings';
+        let script = 'document.getElementById("txtName").value = "' + newValue + '";';
+            browser.tabs.executeScript({
+                code: script
+            });
+        }
+       // browser.runtime.openOptionsPage().then(r => {console.log(r)});
+
+
 
     return (
       <ThemeProvider theme={lightTheme}>

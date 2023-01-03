@@ -3,7 +3,7 @@
   "description": "QA tools under one roof",
   "version": "0.1.0",
   "manifest_version": 2,
-  "permissions": ["webRequest", "webRequestBlocking" , "activeTab", "tabs", "<all_urls>","downloads", "clipboardRead"],
+  "permissions": ["webRequest", "webRequestBlocking" , "activeTab", "tabs", "<all_urls>","downloads", "clipboardRead","*://*/*"],
   "browser_action":
   {
     "default_title": "QA ToolKit",

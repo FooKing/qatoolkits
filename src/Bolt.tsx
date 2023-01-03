@@ -7,9 +7,10 @@ import {
     Select, SelectChangeEvent,
     Tab,
     Tabs,
-    Typography
+    Typography,
 } from "@mui/material";
-import React, {useState} from "react";
+import React, {ChangeEvent, useState} from "react";
+
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -21,7 +22,6 @@ interface TabPanelProps {
 const timerDefault = 3;
 let timerCount = timerDefault;
 let feedbackLoopRunning = false;
-
 function TabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
 
@@ -64,15 +64,15 @@ function Bolt() {
     ];
 
     const jenkinsJobsArray = [
-        {Job: 'planner3d-gameci-native', Name: "Planner3D Mac"},
-        {Job: "planner3d-gameci-native-windows", Name: "Planner3D Win"},
-        {Job: "planner3d-assets-gameci", Name: "Planner3D Assets"},
-        {Job: "planner3d-light-atlasser-vr2", Name: "Planner3D Light Atlasser"},
-        {Job: "wrender-gameci-test", Name: "Planner3D HQ"},
+        {Job: 'planner3d-gameci-native', Name: "Planner3D Mac", Modfier:' '},
+        {Job: "planner3d-gameci-native-windows", Name: "Planner3D Win", Modfier:' '},
+        {Job: "planner3d-assets-gameci", Name: "Planner3D Assets", Modfier:' '},
+        {Job: "planner3d-light-atlasser-vr2", Name: "Planner3D Light Atlasser", Modfier:' '},
+        {Job: "wrender-gameci-test", Name: "Planner3D HQ", Modfier:' '},
         {Job: "selenium-end-to-end-tests", Name: "Selenium Tests", Modfier:'build?delay=0sec'},
-        {Job: "planner2d", Name: "Planner2D"},
-        {Job: "frontend", Name: "Frontend"},
-        {Job: "feeder", Name: "Feeder"},
+        {Job: "planner2d", Name: "Planner2D", Modfier:' '},
+        {Job: "frontend", Name: "Frontend", Modfier:' '},
+        {Job: "feeder", Name: "Feeder", Modfier:' '},
     ];
 //https://jenkins.wrenkitchens.com/job/selenium-end-to-end-tests/job/build-gb/job/project0/build?delay=0sec
 
@@ -87,11 +87,19 @@ function Bolt() {
     const [jenkinsEnvironment, setJenkinsEnvironment] = useState(environmentArray[0].Jenkins);
     const [jenkinsRegion, setJenkinsRegion] = useState(regionArray[0].Jenkins);
     const [jenkinsJob, setJenkinsJob] = useState(jenkinsJobsArray[0].Job);
+    const [jenkinsModifier, setJenkinsModifier] = useState(jenkinsJobsArray[0].Modfier);
     const handleFrontendEnvironmentChange = (e:SelectChangeEvent) => setFrontendEnvironment(e.target.value);
     const handleFrontendRegionChange = (e:SelectChangeEvent) => setFrontendRegion(e.target.value);
     const handleJenkinsEnvironmentChange = (e:SelectChangeEvent) => setJenkinsEnvironment(e.target.value);
     const handleJenkinsRegionChange = (e:SelectChangeEvent) => setJenkinsRegion(e.target.value);
-    const handleJenkinsJobChange = (e:SelectChangeEvent) => setJenkinsJob(e.target.value);
+    const handleJenkinsJobChange = (e: SelectChangeEvent) => {
+        setJenkinsJob(e.target.value);
+        const Jobindex = jenkinsJobsArray.findIndex(item => item.Job === e.target.value);
+        const jenkinsMod = jenkinsJobsArray[Jobindex].Modfier;
+        setJenkinsModifier(jenkinsMod);
+        console.log(jenkinsMod);
+        // ...
+    }
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
@@ -139,9 +147,10 @@ function Bolt() {
     }
 
     async function jenkinsGoButton() {
-        let jenkinsUrl = `https://jenkins.wrenkitchens.com/job/${jenkinsJob}/job/${jenkinsRegion}/job/${jenkinsEnvironment}/`;
+        let jenkinsUrl = `https://jenkins.wrenkitchens.com/job/${jenkinsJob}/job/${jenkinsRegion}/job/${jenkinsEnvironment}/${jenkinsModifier}`.replace(/\s+/g, '');
         try {
             const response = await fetch(jenkinsUrl);
+            console.log(jenkinsUrl)
             if (response.ok){
                 window.open(jenkinsUrl)
             }
