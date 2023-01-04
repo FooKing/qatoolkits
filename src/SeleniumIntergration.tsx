@@ -12,7 +12,6 @@ import React, {useState} from "react";
 import {browser} from "webextension-polyfill-ts";
 
 
-//https://jenkins.wrenkitchens.com/job/selenium-end-to-end-tests/job/build-gb/job/project0/build?delay=0sec
 function SeleniumIntergration(): JSX.Element {
 
     const [expanded, setExpanded] = React.useState<string | false>('panel1');
@@ -54,21 +53,28 @@ function SeleniumIntergration(): JSX.Element {
     //         }
     //     }
     // }
-    async function selSuiteGoButton() {
-        let suiteUrl = `https://jenkins.wrenkitchens.${regionSelect}/job/selenium-end-to-end-tests/job/build-gb/job/${projectSelect}/build?delay=0sec`.replace(/\s+/g, '');
-        console.log(suiteUrl);
-        let newWindow = window.open('about:blank');
-        if (newWindow) {
-            newWindow.location.href = suiteUrl;
-            newWindow.focus();
-            window.onload = function() {
-                if(newWindow){
-                newWindow.onload = function() {
-                    console.log('New window has finished loading');
-                }
-                }
+    let wild: Window | null=null;
+
+    function selSuiteGoButton() {
+        let suiteUrl = `https://www.google.com/webhp`;
+        let newWindow = window.open(suiteUrl, '_parent');
+        // @ts-ignore
+        newWindow.name = 'getTitle';
+        let interval = setInterval(() => {
+            if (newWindow?.name) {
+                console.log('Page Loaded');
+                console.log(newWindow.name);
+                clearInterval(interval);
             }
-        }
+        }, 500);
+    }
+
+
+
+
+     function debugMessage()
+    {
+        console.log("Does this do anything different?s")
     }
 
 

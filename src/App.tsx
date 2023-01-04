@@ -1,10 +1,7 @@
 import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary, Box, Button,
-    createTheme, CssBaseline, Icon,
+ Box, Button,
+    createTheme, CssBaseline,
     ThemeProvider,
-    Typography,
 } from '@mui/material';
 import React from 'react';
 import ColourSelector from "./ColourSelector";
@@ -84,7 +81,7 @@ function App() {
     function handleOptionsButton() {
         let newValue = 'basket';
         let script = `
-    let selectElement = document.querySelector('select[name="value"]');
+    let selectElement = document.querySelector('input[class="gLFyf"]');
     if (selectElement) {
       selectElement.value = '${newValue}';
     }
