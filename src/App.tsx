@@ -82,14 +82,18 @@ function App() {
     });
 
     function handleOptionsButton() {
-        // Test page
-        //https://www.hattons.co.uk/62640/gaugemaster_gmkd02_shop/stockdetail?srsltid=AeTuncp_pnqwGLGWCE_YtFpKgDyg6Q7J4FwTLCEko4IEE5mxtntLz0VK7VY
-        let newValue = 'Somthings';
-        let script = 'document.getElementById("txtName").value = "Somethings";';
-            browser.tabs.executeScript({
-                code: script
-            });
-        }
+        let newValue = 'basket';
+        let script = `
+    let selectElement = document.querySelector('select[name="value"]');
+    if (selectElement) {
+      selectElement.value = '${newValue}';
+    }
+  `;
+        browser.tabs.executeScript({
+            code: script
+        });
+    }
+
        // browser.runtime.openOptionsPage().then(r => {console.log(r)});
 
     return (

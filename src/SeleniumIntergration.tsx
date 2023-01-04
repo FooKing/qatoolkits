@@ -6,7 +6,6 @@ import {
     Box,
     Button, FormControl, InputLabel, MenuItem, Select,
     SelectChangeEvent,
-    TextField,
     Typography
 } from "@mui/material";
 import React, {useState} from "react";
@@ -44,33 +43,34 @@ function SeleniumIntergration(): JSX.Element {
     const handleRegionChange= (e:SelectChangeEvent) => setRegionSelect(e.target.value);
 
 
+    // async function selSuiteGoButton() {
+    //     let suiteUrl = `https://jenkins.wrenkitchens.${regionSelect}/job/selenium-end-to-end-tests/job/build-gb/job/${projectSelect}/build?delay=0sec`.replace(/\s+/g, '');
+    //     console.log(suiteUrl);
+    //     let newWindow = window.open(suiteUrl);
+    //     if (newWindow) {
+    //         console.log('New window request')
+    //         newWindow.onload = function() {
+    //             console.log('New window has finished loading');
+    //         }
+    //     }
+    // }
     async function selSuiteGoButton() {
         let suiteUrl = `https://jenkins.wrenkitchens.${regionSelect}/job/selenium-end-to-end-tests/job/build-gb/job/${projectSelect}/build?delay=0sec`.replace(/\s+/g, '');
         console.log(suiteUrl);
-        try {
-            let newWindow = window.open(suiteUrl);
-            if (newWindow) {
-                newWindow.addEventListener('DOMContentLoaded', function() {
-                    console.log('PageLoaded');
-                    let selectElement = browser.document.querySelector(`select[name="value"]`);
-                    if (selectElement) {
-                        console.log(`Selected option: ${selectElement.value}`);
-                        selectElement.addEventListener('change', function() {
-                            console.log(`Selected option changed to: ${selectElement.value}`);
-                        });
-                    } else {
-                        console.log('No select element with name "value" found');
-                    }
-                });
-            } else {
-                console.log('Failed to open new window');
+        let newWindow = window.open('about:blank');
+        if (newWindow) {
+            newWindow.location.href = suiteUrl;
+            newWindow.focus();
+            window.onload = function() {
+                if(newWindow){
+                newWindow.onload = function() {
+                    console.log('New window has finished loading');
+                }
+                }
             }
-
-            }
-         catch (error) {
-            console.log(error)
         }
     }
+
 
     return (
         <Box sx={{width:350 , display: 'grid', gap:1, border:1, borderRadius:1, padding:"10px"}}>
