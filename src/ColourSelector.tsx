@@ -1,6 +1,7 @@
 import {ColorResult, SliderPicker} from "@hello-pangea/color-picker";
 import {Box, Button} from "@mui/material";
 import React from "react";
+import ISidebarComponent from "./ISidebarComponent";
 
 const colorPickerChange = (color: ColorResult) => {
     navigator.clipboard.writeText(color.hex)

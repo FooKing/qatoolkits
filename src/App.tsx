@@ -14,6 +14,8 @@ import ThreeDDownloader from "./ThreeDDownloader";
 import JsonTools from "./JsonTools";
 import optionsIcon from "./Icons/optionsIcon.svg"
 import {browser} from "webextension-polyfill-ts";
+import SeleniumIntegration from "./SeleniumIntergration";
+import SidebarSection from "./SidebarSection";
 
 
 function App() {
@@ -79,12 +81,6 @@ function App() {
         }
     });
 
-    const [expanded, setExpanded] = React.useState<string | false>('panel1');
-    const handleChange =
-        (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-            setExpanded(newExpanded ? panel : false);
-        };
-
     function handleOptionsButton() {
         // Test page
         //https://www.hattons.co.uk/62640/gaugemaster_gmkd02_shop/stockdetail?srsltid=AeTuncp_pnqwGLGWCE_YtFpKgDyg6Q7J4FwTLCEko4IEE5mxtntLz0VK7VY
@@ -96,57 +92,74 @@ function App() {
         }
        // browser.runtime.openOptionsPage().then(r => {console.log(r)});
 
-
-
     return (
       <ThemeProvider theme={lightTheme}>
       <CssBaseline />
-          <Accordion expanded={expanded === 'colourPicker'} onChange={handleChange('colourPicker')}>
-              <AccordionSummary aria-controls="colourPicker-content" id="colourPicker-header">
-                  <Typography fontSize={18} fontWeight={"semi bold"} >Colour picker</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                  <ColourSelector></ColourSelector>
-              </AccordionDetails>
-          </Accordion>
-          <Accordion expanded={expanded === 'Bolt'} onChange={handleChange('Bolt')}>
-              <AccordionSummary aria-controls="Bolt-content" id="Bolt-header">
-                  <Typography fontSize={18} fontWeight={"semi bold"} >Bolt</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                    <Bolt></Bolt>
-              </AccordionDetails>
-          </Accordion>
-          <Accordion expanded={expanded === 'jsonTools'} onChange={handleChange('jsonTools')}>
-              <AccordionSummary aria-controls="jsonTools-content" id="jsonTools-header">
-                  <Typography fontSize={18} fontWeight={"semi bold"} >Json Tools</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                  <Typography>
-                      <JsonTools></JsonTools>
-                  </Typography>
-              </AccordionDetails>
-          </Accordion>
-          <Accordion expanded={expanded === 'DebugCommands'} onChange={handleChange('DebugCommands')}>
-              <AccordionSummary aria-controls="DebugCommands-content" id="ConsoleCommands-header">
-                  <Typography fontSize={18} fontWeight={"semi bold"} >Debug Commands</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                  <Typography>
-                      <DebugCommands></DebugCommands>
-                  </Typography>
-              </AccordionDetails>
-          </Accordion>
-          <Accordion expanded={expanded === 'Downloader'} onChange={handleChange('Downloader')}>
-              <AccordionSummary aria-controls="Downloader-content" id="Downloader-header">
-                  <Typography fontSize={18} fontWeight={"semi bold"} >3D Downloader</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                  <Typography>
-                      <ThreeDDownloader></ThreeDDownloader>
-                  </Typography>
-              </AccordionDetails>
-          </Accordion>
+          <SidebarSection name={"colourPicker"} prettyName={"Colour picker"} component={<ColourSelector />}/>
+          <SidebarSection name={"Bolt"} prettyName={"Bolt"} component={<Bolt />}/>
+          <SidebarSection name={"jsonTools"} prettyName={"JSON Tools"} component={<JsonTools />}/>
+          <SidebarSection name={"DebugCommands"} prettyName={"Debug Commands"} component={<DebugCommands />}/>
+          <SidebarSection name={"Downloader"} prettyName={"3D Downloader"} component={<ThreeDDownloader />}/>
+          <SidebarSection name={"seleniumInt"} prettyName={"Selenium Integration"} component={<SeleniumIntegration />}/>
+
+
+
+          {/*<Accordion expanded={expanded === 'colourPicker'} onChange={handleChange('colourPicker')}>*/}
+          {/*    <AccordionSummary aria-controls="colourPicker-content" id="colourPicker-header">*/}
+          {/*        <Typography fontSize={18} fontWeight={"semi bold"} >Colour picker</Typography>*/}
+          {/*    </AccordionSummary>*/}
+          {/*    <AccordionDetails>*/}
+          {/*        <ColourSelector />*/}
+          {/*    </AccordionDetails>*/}
+          {/*</Accordion>*/}
+          {/*<Accordion expanded={expanded === 'Bolt'} onChange={handleChange('Bolt')}>*/}
+          {/*    <AccordionSummary aria-controls="Bolt-content" id="Bolt-header">*/}
+          {/*        <Typography fontSize={18} fontWeight={"semi bold"} >Bolt</Typography>*/}
+          {/*    </AccordionSummary>*/}
+          {/*    <AccordionDetails>*/}
+          {/*          <Bolt></Bolt>*/}
+          {/*    </AccordionDetails>*/}
+          {/*</Accordion>*/}
+          {/*<Accordion expanded={expanded === 'jsonTools'} onChange={handleChange('jsonTools')}>*/}
+          {/*    <AccordionSummary aria-controls="jsonTools-content" id="jsonTools-header">*/}
+          {/*        <Typography fontSize={18} fontWeight={"semi bold"} >Json Tools</Typography>*/}
+          {/*    </AccordionSummary>*/}
+          {/*    <AccordionDetails>*/}
+          {/*        <Typography>*/}
+          {/*            <JsonTools></JsonTools>*/}
+          {/*        </Typography>*/}
+          {/*    </AccordionDetails>*/}
+          {/*</Accordion>*/}
+          {/*<Accordion expanded={expanded === 'DebugCommands'} onChange={handleChange('DebugCommands')}>*/}
+          {/*    <AccordionSummary aria-controls="DebugCommands-content" id="DebugCommands-header">*/}
+          {/*        <Typography fontSize={18} fontWeight={"semi bold"} >Debug Commands</Typography>*/}
+          {/*    </AccordionSummary>*/}
+          {/*    <AccordionDetails>*/}
+          {/*        <Typography>*/}
+          {/*            <DebugCommands></DebugCommands>*/}
+          {/*        </Typography>*/}
+          {/*    </AccordionDetails>*/}
+          {/*</Accordion>*/}
+          {/*<Accordion expanded={expanded === 'Downloader'} onChange={handleChange('Downloader')}>*/}
+          {/*    <AccordionSummary aria-controls="Downloader-content" id="Downloader-header">*/}
+          {/*        <Typography fontSize={18} fontWeight={"semi bold"} >3D Downloader</Typography>*/}
+          {/*    </AccordionSummary>*/}
+          {/*    <AccordionDetails>*/}
+          {/*        <Typography>*/}
+          {/*            <ThreeDDownloader></ThreeDDownloader>*/}
+          {/*        </Typography>*/}
+          {/*    </AccordionDetails>*/}
+          {/*</Accordion>*/}
+          {/*<Accordion expanded={expanded === 'seleniumInt'} onChange={handleChange('seleniumInt')}>*/}
+          {/*    <AccordionSummary aria-controls="seleniumInt-content" id="seleniumInt-header">*/}
+          {/*        <Typography fontSize={18} fontWeight={"semi bold"} >Selenium Intergration</Typography>*/}
+          {/*    </AccordionSummary>*/}
+          {/*    <AccordionDetails>*/}
+          {/*        <Typography>*/}
+          {/*            <SeleniumIntergration></SeleniumIntergration>*/}
+          {/*        </Typography>*/}
+          {/*    </AccordionDetails>*/}
+          {/*</Accordion>*/}
           <Box display="flex" justifyContent="right" alignItems="flex-end" bottom="0" >
             <Button sx={{width: 30, height: 40}} onClick={handleOptionsButton}>
                 <img alt="Options" height="25px" src={optionsIcon}/>

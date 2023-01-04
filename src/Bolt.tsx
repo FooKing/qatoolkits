@@ -9,7 +9,7 @@ import {
     Tabs,
     Typography,
 } from "@mui/material";
-import React, {ChangeEvent, useState} from "react";
+import React, { useState} from "react";
 
 
 interface TabPanelProps {
