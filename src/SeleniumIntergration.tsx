@@ -26,6 +26,17 @@ function SeleniumIntergration(): JSX.Element {
     const jenkinsSeleniumArray = [
         {name: 'Alerts', value:'alerts'},
         {name: 'Auto Planning Bespoke Worktops', value:'autoPlanningBespokeWorktops'},
+        {name: 'Auto Planning Specialist Worktops', value:'autoPlanningSpecialistWorktops'},
+        {name: 'Auto Planning Worktops', value:'autoPlanningWorktops'},
+        {name: 'Basket', value:'basket'},
+        {name: 'Crit Frontend Smoke', value:'criticalFrontendSmoke'},
+        {name: 'Crit Tests', value:'criticalTests'},
+        {name: 'Cooks Pantry', value:'cooksPantry'},
+        {name: 'CPP', value:'cpp'},
+        {name: 'Custom', value:'customTest'},
+        {name: 'Decor', value:'decors'},
+        {name: 'Fillers', value:'fillers'},
+        {name: 'Kitchen Layout', value:'kitchenLayout'},
         ];
     const regionArray = [
         {name: 'UK', value:'com', build:'build-gb'},
@@ -38,7 +49,7 @@ function SeleniumIntergration(): JSX.Element {
     const [projectSelect, setProjectSelect] = useState(projectArray[0].value);
     const handleProjectChange= (e:SelectChangeEvent) => setProjectSelect(e.target.value);
 
-    const [regionSelect, setRegionSelect] = useState(regionArray[0].value);
+    const [regionSelect, setRegionSelect] = useState(regionArray[0].build);
     const handleRegionChange= (e:SelectChangeEvent) => setRegionSelect(e.target.value);
 
 
@@ -53,21 +64,31 @@ function SeleniumIntergration(): JSX.Element {
     //         }
     //     }
     // }
-    let wild: Window | null=null;
-
-    function selSuiteGoButton() {
-        let suiteUrl = `https://www.google.com/webhp`;
-        let newWindow = window.open(suiteUrl, '_parent');
-        // @ts-ignore
-        newWindow.name = 'getTitle';
-        let interval = setInterval(() => {
-            if (newWindow?.name) {
-                console.log('Page Loaded');
-                console.log(newWindow.name);
-                clearInterval(interval);
-            }
-        }, 500);
+function onCreated(tab:any){
+    console.log(`Created new tab: ${tab.id}`);
+    let newValue = jenkinsSuite;
+    let script = `
+    let selectElement = document.querySelector('select[name="value"]');
+    if (selectElement) {
+      selectElement.value = '${newValue}';
     }
+  `;
+    browser.tabs.executeScript({
+        code: script
+    });
+}
+    function onError(error: Error){
+        console.log(`Created new tab: ${error}`);
+    }
+    function selSuiteGoButton() {
+        let suiteUrl = `https://jenkins.wrenkitchens.com/job/selenium-end-to-end-tests/job/${regionSelect}/job/${projectSelect}/build?delay=0sec`;
+        let newTab = browser.tabs.create({url:suiteUrl});
+        newTab.then(onCreated, onError);
+    };
+    function selSuiteReportingGoButton() {
+        let suiteUrl = `http://planner-tools.wrenkitchens.com:8080`;
+        let newTab = browser.tabs.create({url:suiteUrl});
+    };
 
 
 
@@ -89,7 +110,7 @@ function SeleniumIntergration(): JSX.Element {
                     <FormControl sx={{width:'60%', m:1}} variant="standard">
                         <InputLabel>Suite</InputLabel>
                     <Select size="small" id="jenkinsSelect" defaultValue={jenkinsSuite} onChange={(e: SelectChangeEvent) => handleSeleniumTestChange(e)}
-                            MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
+                            MenuProps={{ PaperProps: { sx: { maxHeight: 350 } } }}>
                         {jenkinsSeleniumArray.map((item, index) => {
                             return <MenuItem key={index} value={item.value}> {item.name}</MenuItem>
                         })}
@@ -109,12 +130,13 @@ function SeleniumIntergration(): JSX.Element {
                         <Select size="small" id="projectSelect" defaultValue={regionSelect} onChange={(e: SelectChangeEvent) => handleRegionChange(e)}
                                 MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}>
                             {regionArray.map((item, index) => {
-                                return <MenuItem key={index} value={item.value}> {item.name}</MenuItem>
+                                return <MenuItem key={index} value={item.build}> {item.name}</MenuItem>
                             })}
                         </Select>
                     </FormControl>
-                    <Box  sx={{display: 'flex', justifyContent: 'right', paddingTop:"auto"}}>
+                    <Box  sx={{display: 'flex', justifyContent: 'right', paddingTop:"auto", gap:1}}>
                         <Button  onClick={selSuiteGoButton} variant="contained" > Go </Button>
+                        <Button  onClick={selSuiteReportingGoButton} variant="contained" > Test Reports </Button>
                     </Box>
                 </AccordionDetails>
             </Accordion>

@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4b9e7239-1912-4b06-b7d4-c19c9b5ac9ed" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SeleniumIntergration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/SeleniumIntergration.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,7 +58,7 @@
     "nodejs_package_manager_path": "npm",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
-    "ts.external.directory.path": "C:\\Users\\skage\\OneDrive\\Desktop\\qatoolkits\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "/Users/chris.scarratt/qatoolkits/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -120,6 +119,7 @@
       <workItem from="1672777262582" duration="6707000" />
       <workItem from="1672825386522" duration="3722000" />
       <workItem from="1672859750342" duration="9440000" />
+      <workItem from="1672904610925" duration="3510000" />
     </task>
     <servers />
   </component>
