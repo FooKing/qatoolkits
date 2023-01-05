@@ -11,7 +11,7 @@ import ThreeDDownloader from "./ThreeDDownloader";
 import JsonTools from "./JsonTools";
 import optionsIcon from "./Icons/optionsIcon.svg"
 import {browser} from "webextension-polyfill-ts";
-import SeleniumIntegration from "./SeleniumIntergration";
+import SeleniumIntegration from "./Automation";
 import SidebarSection from "./SidebarSection";
 
 
@@ -101,7 +101,7 @@ function App() {
           <SidebarSection name={"jsonTools"} prettyName={"JSON Tools"} component={<JsonTools />}/>
           <SidebarSection name={"DebugCommands"} prettyName={"Debug Commands"} component={<DebugCommands />}/>
           <SidebarSection name={"Downloader"} prettyName={"3D Downloader"} component={<ThreeDDownloader />}/>
-          <SidebarSection name={"seleniumInt"} prettyName={"Selenium Integration"} component={<SeleniumIntegration />}/>
+          <SidebarSection name={"Automation"} prettyName={"Automation"} component={<SeleniumIntegration />}/>
 
 
 

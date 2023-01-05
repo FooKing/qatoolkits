@@ -4,7 +4,7 @@ import {
     AccordionDetails,
     AccordionSummary,
     Box,
-    Button, FormControl, InputLabel, MenuItem, Select,
+    Button, FormControl, Grid, InputLabel, MenuItem, Select,
     SelectChangeEvent,
     Typography
 } from "@mui/material";
@@ -12,7 +12,7 @@ import React, {useState} from "react";
 import {browser} from "webextension-polyfill-ts";
 
 
-function SeleniumIntergration(): JSX.Element {
+function Automation(): JSX.Element {
 
     const [expanded, setExpanded] = React.useState<string | false>('panel1');
     const handleChange =
@@ -37,6 +37,27 @@ function SeleniumIntergration(): JSX.Element {
         {name: 'Decor', value:'decors'},
         {name: 'Fillers', value:'fillers'},
         {name: 'Kitchen Layout', value:'kitchenLayout'},
+        {name: 'Lighting', value:'lighting'},
+        {name: 'New Room Profile', value:'newRoomProfile'},
+        {name: 'Parallel Tests', value:'parallelTests'},
+        {name: 'Performance Tests', value:'performanceTests'},
+        {name: 'Pilasters', value:'pilasters'},
+        {name: 'Plan Images', value:'planImages'},
+        {name: 'Plan Loading Active Orders', value:'plansLoadingActiveOrderBank'},
+        {name: 'Plan Loading Active Quotes', value:'plansLoadingActiveQuoteBank'},
+        {name: 'Plan Loading Orders', value:'plansLoadingFromOrders'},
+        {name: 'Plan Loading Active', value:'plansLoadingFromQuotes'},
+        {name: 'Profiles', value:'profiles'},
+        {name: 'Read Only Plans', value:'readOnlyPlans'},
+        {name: 'Range Change', value:'rangeChanging'},
+        {name: 'Retail', value:'retail'},
+        {name: 'Smoke', value:'smoke'},
+        {name: 'Tables And Seating', value:'tablesAndSeating'},
+        {name: 'Top 500 Ordered Delivered in 2 Weeks', value:'top500OrdersDeliveredIn2Weeks'},
+        {name: 'Top 500 Quotes Placed Past 2 Weeks', value:'top500QuotesPlacedPast2Weeks'},
+        {name: 'Unit Height And Depth Selectors', value:'unitHeightAndDepthSelectors'},
+        {name: 'Validation', value:'validation'},
+        {name: 'Worktops', value:'worktops'},
         ];
     const regionArray = [
         {name: 'UK', value:'com', build:'build-gb'},
@@ -103,7 +124,7 @@ function onCreated(tab:any){
         <Box sx={{width:350 , display: 'grid', gap:1, border:1, borderRadius:1, padding:"10px"}}>
             <Accordion expanded={expanded === 'jenkinsSuites'} onChange={handleChange('jenkinsSuites')}>
                 <AccordionSummary aria-controls="jenkinsSuites-content" id="jenkinsSuites-header">
-                    <Typography fontSize={18} fontWeight={"semi bold"} >Jenkins Suites</Typography>
+                    <Typography fontSize={18} fontWeight={"semi bold"} >End To End</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
 
@@ -134,14 +155,19 @@ function onCreated(tab:any){
                             })}
                         </Select>
                     </FormControl>
-                    <Box  sx={{display: 'flex', justifyContent: 'right', paddingTop:"auto", gap:1}}>
-                        <Button  onClick={selSuiteGoButton} variant="contained" > Go </Button>
-                        <Button  onClick={selSuiteReportingGoButton} variant="contained" > Test Reports </Button>
-                    </Box>
+                    <Grid container spacing={1}>
+                        <Grid item xs={12} >
+                            <Button onClick={selSuiteGoButton} variant="contained" > Go </Button>
+                        </Grid>
+                        <Grid item xs={12} sx={{width:1}}>
+                            <Button fullWidth={true} onClick={selSuiteReportingGoButton} variant="contained" >Report Portal</Button>
+                        </Grid>
+                    </Grid>
+
                 </AccordionDetails>
             </Accordion>
 
         </Box>
     );
 }
-export default SeleniumIntergration;
+export default Automation;

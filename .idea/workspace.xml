@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b9e7239-1912-4b06-b7d4-c19c9b5ac9ed" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/build 2.zip" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SeleniumIntergration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/SeleniumIntergration.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SeleniumIntergration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Automation.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +121,7 @@
       <workItem from="1672777262582" duration="6707000" />
       <workItem from="1672825386522" duration="3722000" />
       <workItem from="1672859750342" duration="9440000" />
-      <workItem from="1672904610925" duration="3510000" />
+      <workItem from="1672904610925" duration="8248000" />
     </task>
     <servers />
   </component>
