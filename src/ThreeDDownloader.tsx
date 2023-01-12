@@ -10,6 +10,8 @@ const timerDefault = 3;
 let timerCount = timerDefault;
 let feedbackLoopRunning = false;
 
+
+
 function ThreeDDownloader() {
 // setup arrays first for initial values of hooks
     const enviroArray = [
@@ -47,6 +49,23 @@ function ThreeDDownloader() {
     // loop delays.
     async function delay(ms: number) {
         return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function handleCheckVersionButton() {
+        const requestUrl = new XMLHttpRequest();
+        const versionCheckUrl = `https://${staticLocation}.wrenkitchens.com/planner3d/${currentPlatform}/${environment}version.txt`.replace(/\s+/g,'');
+        requestUrl.open('GET', versionCheckUrl);
+        requestUrl.send();
+        requestUrl.onload = async function () {
+            if (requestUrl.status === 200) {
+                const latestVersion = requestUrl.responseText;
+                setUserFeedbackMessage(requestUrl.responseText);
+
+            } else {
+                console.error(`Error ${requestUrl.status}: ${requestUrl.statusText}`);
+            }
+
+        }
     }
 
     const handleDownloadButton = async () => {
@@ -187,7 +206,9 @@ function ThreeDDownloader() {
             </FormControl>
                 <Button  sx={{ m: 1, alignItems:"center", width:"40%"}} size="small" variant="contained" onClick={handleDownloadButton} disabled={isDownloading}> Download </Button>
                 <Button  sx={{ m: 1, alignItems:"center", width:"40%"}} size="small" variant="contained" onClick={handleDownloadManifestButton} disabled={isDownloading}> Manifest Download </Button>
-                <p>{userFeedbackMessage}</p>
+            <Button  sx={{ m: 1, alignItems:"center", width:"40%"}} size="small" variant="contained" onClick={handleCheckVersionButton} disabled={isDownloading}> Check Latest Version </Button>
+
+            <p>{userFeedbackMessage}</p>
                 <LinearProgress variant="determinate" color={downloadColour} style={{display:hideDownloadBar}} value={downloadPercent}></LinearProgress>
         </Box>
     );
